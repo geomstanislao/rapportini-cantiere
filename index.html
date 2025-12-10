@@ -3,1303 +3,3409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapportini Cantiere - Sistema Completo</title>
+    <title>Rapportini Cantiere PRO - Sistema Completo</title>
     <style>
-        /* Aggiungi questi nuovi stili alla fine del CSS esistente */
-        
-        /* Lavorazioni */
-        .work-category {
-            margin-bottom: 25px;
-            border: 2px solid #eaeef5;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .work-category-header {
-            background: #f0f5ff;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s;
-        }
-        
-        .work-category-header:hover {
-            background: #e9f2ff;
-        }
-        
-        .work-category-header.active {
-            background: #2c5aa0;
-            color: white;
-            border-bottom-color: #1a3c8b;
-        }
-        
-        .work-category-content {
+        * {
+            margin: 0;
             padding: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        .work-category-content.active {
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            max-height: 1000px;
         }
         
-        .work-item {
-            display: grid;
-            grid-template-columns: 1fr auto auto auto auto;
-            gap: 15px;
-            align-items: center;
-            padding: 12px;
+        /* Container Principale */
+        .main-container {
+            width: 100%;
+            max-width: 1600px;
+            height: 95vh;
             background: white;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border: 1px solid #eee;
-        }
-        
-        .work-item:hover {
-            background: #f8faff;
-            border-color: #cfe2ff;
-        }
-        
-        /* Modal lavorazioni */
-        .work-template {
-            border: 1px dashed #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            cursor: move;
-        }
-        
-        .work-template:hover {
-            border-color: #2c5aa0;
-            background: #f8faff;
-        }
-        
-        /* Summary lavorazioni */
-        .work-summary {
-            background: linear-gradient(135deg, #f8fafc 0%, #f0f5ff 100%);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-        
-        .work-summary-item {
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
             display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed #dee2e6;
         }
         
-        /* Responsive */
-        @media (max-width: 992px) {
-            .work-item {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            
-            .work-item-actions {
-                display: flex;
-                gap: 10px;
-                justify-content: flex-end;
-            }
-        }
-        
-        /* Worker specific works */
-        .worker-works-list {
-            margin-top: 10px;
-            padding-left: 15px;
-            border-left: 3px solid #eaeef5;
-        }
-        
-        .worker-work-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 5px 10px;
-            background: #f8f9fa;
-            border-radius: 4px;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-        
-        /* Costi per lavorazione */
-        .work-cost-input {
-            max-width: 120px;
-        }
-        
-        .work-total-badge {
-            background: #28a745;
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #2c3e50 0%, #1a1a2e 100%);
             color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            margin-left: 10px;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
         }
         
-        /* Template library */
-        .template-library {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        .logo {
+            display: flex;
+            align-items: center;
             gap: 15px;
-            margin-top: 20px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .template-card {
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .nav-menu {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .nav-item {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
         }
         
-        .template-card:hover {
-            border-color: #2c5aa0;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(5px);
         }
         
-        .template-title {
-            font-weight: bold;
-            color: #1a3c8b;
-            margin-bottom: 8px;
+        .nav-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
         
-        /* Progress bar lavori */
-        .work-progress {
-            height: 8px;
-            background: #eaeef5;
-            border-radius: 4px;
-            margin: 10px 0;
+        .nav-icon {
+            font-size: 1.2rem;
+        }
+        
+        .user-panel {
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .user-role {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f8fafc;
+        }
+        
+        /* Header */
+        .main-header {
+            padding: 25px 35px;
+            background: white;
+            border-bottom: 1px solid #eaeef5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .page-title {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page-title h1 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .page-title p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding: 30px 35px;
+            overflow-y: auto;
+        }
+        
+        /* Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
             overflow: hidden;
         }
         
-        .work-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #2c5aa0, #4d7bc9);
-            border-radius: 4px;
-            transition: width 0.3s;
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
         }
         
-        /* Quick add lavori */
-        .quick-work-buttons {
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+        }
+        
+        .card-reports::before { background: linear-gradient(180deg, #667eea 0%, #764ba2 100%); }
+        .card-workers::before { background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%); }
+        .card-equipment::before { background: linear-gradient(180deg, #43e97b 0%, #38f9d7 100%); }
+        .card-cost::before { background: linear-gradient(180deg, #fa709a 0%, #fee140 100%); }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
             margin-bottom: 20px;
         }
         
-        .quick-work-btn {
-            padding: 8px 16px;
-            background: #e9f2ff;
-            border: 1px solid #cfe2ff;
+        .card-reports .stat-icon { background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); color: #667eea; }
+        .card-workers .stat-icon { background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, rgba(0, 242, 254, 0.1) 100%); color: #4facfe; }
+        .card-equipment .stat-icon { background: linear-gradient(135deg, rgba(67, 233, 123, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%); color: #43e97b; }
+        .card-cost .stat-icon { background: linear-gradient(135deg, rgba(250, 112, 154, 0.1) 0%, rgba(254, 225, 64, 0.1) 100%); color: #fa709a; }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        .stat-change {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stat-change.positive { color: #43e97b; }
+        .stat-change.negative { color: #fa709a; }
+        
+        /* Forms */
+        .form-container {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        .form-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #eaeef5;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23667eea' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            background-size: 16px;
+            padding-right: 50px;
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* Work Categories */
+        .work-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .work-category-card {
+            background: white;
+            border-radius: 16px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+        
+        .work-category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .category-title {
+            flex: 1;
+        }
+        
+        .category-title h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .category-count {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .category-body {
+            padding: 25px;
+        }
+        
+        /* Work Items */
+        .work-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .work-item-info {
+            flex: 1;
+        }
+        
+        .work-item-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .work-item-details {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .work-item-detail {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .work-item-performers {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .performer-badge {
+            padding: 4px 12px;
+            background: rgba(102, 126, 234, 0.1);
             border-radius: 20px;
-            color: #1a3c8b;
+            font-size: 0.85rem;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .work-item-cost {
+            font-weight: 700;
+            color: #43e97b;
+            font-size: 1.2rem;
+        }
+        
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            margin-bottom: 40px;
+            counter-reset: step;
+            position: relative;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #eaeef5;
+            z-index: 1;
+        }
+        
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #eaeef5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: 700;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .progress-step.active .step-circle {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .progress-step.completed .step-circle {
+            background: #43e97b;
+            color: white;
+            border-color: #43e97b;
+        }
+        
+        .step-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+        
+        .progress-step.active .step-label {
+            color: #2c3e50;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(67, 233, 123, 0.4);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(250, 112, 154, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
             font-size: 0.9rem;
         }
         
-        .quick-work-btn:hover {
-            background: #dce7ff;
-            transform: translateY(-2px);
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .quick-work-btn.active {
-            background: #2c5aa0;
-            color: white;
-            border-color: #1a3c8b;
+        /* Action Bar */
+        .action-bar {
+            display: flex;
+            gap: 15px;
+            padding: 25px 0;
+            border-top: 1px solid #eaeef5;
+            margin-top: 30px;
+        }
+        
+        /* Tables */
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        .table-header {
+            padding: 25px;
+            background: #f8fafc;
+            border-bottom: 1px solid #eaeef5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .table-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: #f8fafc;
+        }
+        
+        th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #eaeef5;
+            white-space: nowrap;
+        }
+        
+        td {
+            padding: 20px;
+            border-bottom: 1px solid #eaeef5;
+            vertical-align: middle;
+        }
+        
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-completed {
+            background: rgba(67, 233, 123, 0.1);
+            color: #43e97b;
+        }
+        
+        .status-draft {
+            background: rgba(250, 112, 154, 0.1);
+            color: #fa709a;
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            padding: 30px;
+            border-bottom: 1px solid #eaeef5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #2c3e50;
+        }
+        
+        /* Alert */
+        .alert {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, rgba(67, 233, 123, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%);
+            border: 1px solid rgba(67, 233, 123, 0.3);
+            color: #43e97b;
+        }
+        
+        .alert-warning {
+            background: linear-gradient(135deg, rgba(250, 112, 154, 0.1) 0%, rgba(254, 225, 64, 0.1) 100%);
+            border: 1px solid rgba(250, 112, 154, 0.3);
+            color: #fa709a;
+        }
+        
+        .alert-icon {
+            font-size: 1.5rem;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 40px;
+            color: #7f8c8d;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-container {
+                height: auto;
+                min-height: 95vh;
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                padding: 20px;
+            }
+            
+            .logo {
+                margin-bottom: 0;
+                border-bottom: none;
+                border-right: 1px solid rgba(255, 255, 255, 0.1);
+                padding-right: 20px;
+                margin-right: 20px;
+            }
+            
+            .nav-menu {
+                flex-direction: row;
+                flex: 1;
+                overflow-x: auto;
+                padding: 10px 0;
+            }
+            
+            .nav-item {
+                white-space: nowrap;
+            }
+            
+            .user-panel {
+                border-top: none;
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
+                padding-left: 20px;
+                margin-left: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                flex-direction: column;
+            }
+            
+            .logo {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                margin-right: 0;
+                padding-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+            
+            .user-panel {
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding-left: 0;
+                margin-left: 0;
+                padding-top: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .work-categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .progress-steps {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .progress-steps::before {
+                display: none;
+            }
+            
+            .progress-step {
+                display: flex;
+                align-items: center;
+                text-align: left;
+            }
+            
+            .step-circle {
+                margin: 0 20px 0 0;
+            }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4a9a 100%);
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen (rimane uguale) -->
-    <!-- Main App (rimane uguale) -->
-    
-    <!-- Aggiungi questa nuova sezione nel tab Nuovo Rapportino, dopo i subappaltatori -->
-    <!--
-    <div class="tab-content" id="newReport">
-        ... esistente ...
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🏗️</div>
+                <div class="logo-text">Cantiere PRO</div>
+            </div>
+            
+            <div class="nav-menu">
+                <div class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item" data-page="new-report">
+                    <span class="nav-icon">✍️</span>
+                    <span>Nuovo Rapportino</span>
+                </div>
+                <div class="nav-item" data-page="works">
+                    <span class="nav-icon">🔨</span>
+                    <span>Lavorazioni</span>
+                </div>
+                <div class="nav-item" data-page="workers">
+                    <span class="nav-icon">👷</span>
+                    <span>Operai</span>
+                </div>
+                <div class="nav-item" data-page="equipment">
+                    <span class="nav-icon">🚜</span>
+                    <span>Mezzi</span>
+                </div>
+                <div class="nav-item" data-page="subcontractors">
+                    <span class="nav-icon">🏢</span>
+                    <span>Subappaltatori</span>
+                </div>
+                <div class="nav-item" data-page="reports">
+                    <span class="nav-icon">📋</span>
+                    <span>Archivio</span>
+                </div>
+                <div class="nav-item" data-page="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Impostazioni</span>
+                </div>
+            </div>
+            
+            <div class="user-panel">
+                <div class="user-avatar" id="userAvatar">👑</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Amministratore</div>
+                    <div class="user-role">Super Admin</div>
+                </div>
+                <button class="btn btn-icon btn-danger" onclick="logout()">🚪</button>
+            </div>
+        </div>
         
-        <!-- NUOVA SEZIONE: Lavorazioni di Cantiere -->
-        <div class="form-section" id="worksSection">
-            <h3 class="section-title">🔨 Lavorazioni di Cantiere
-                <button type="button" class="btn btn-sm btn-success" onclick="openWorkTemplates()">
-                    📚 Biblioteca Lavori
-                </button>
-                <button type="button" class="btn btn-sm btn-info" onclick="openManageModal('workCategories')">
-                    🗂️ Gestisci Categorie
-                </button>
-            </h3>
-            
-            <div id="worksAlert" class="alert alert-info" style="display: none;">
-                <span class="alert-icon">💡</span>
-                <span id="worksAlertText">Aggiungi le lavorazioni eseguite oggi in cantiere</span>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="main-header">
+                <div class="page-title">
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p id="pageDescription">Panoramica generale del sistema</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="quickActionBtn" style="display: none;">
+                        <span>Azioni Rapide</span>
+                    </button>
+                    <button class="btn btn-icon btn-outline" onclick="showNotifications()">
+                        🔔
+                    </button>
+                </div>
             </div>
             
-            <!-- Categorie lavori (dinamiche) -->
-            <div id="workCategoriesContainer">
-                <!-- Popolato dinamicamente -->
-            </div>
-            
-            <!-- Aggiungi nuova lavorazione -->
-            <div style="margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 8px;">
-                <h4 style="color: #1a3c8b; margin-bottom: 15px;">➕ Aggiungi Nuova Lavorazione</h4>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Categoria Lavoro</label>
-                        <select id="newWorkCategory" class="form-control" onchange="updateWorkSubcategories()">
-                            <option value="">Seleziona categoria...</option>
-                        </select>
+            <!-- Content Area -->
+            <div class="content-area" id="contentArea">
+                <!-- Dashboard Content -->
+                <div id="dashboardPage" class="page-content">
+                    <!-- Dashboard Statistics -->
+                    <div class="dashboard-cards">
+                        <div class="stat-card card-reports">
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-value" id="totalReports">0</div>
+                            <div class="stat-label">Rapportini Totali</div>
+                            <div class="stat-change positive">
+                                <span>↑ 12%</span>
+                                <span>dall'ultimo mese</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card card-workers">
+                            <div class="stat-icon">👷</div>
+                            <div class="stat-value" id="totalWorkers">0</div>
+                            <div class="stat-label">Operai Attivi</div>
+                            <div class="stat-change positive">
+                                <span>↑ 5%</span>
+                                <span>dall'ultimo mese</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card card-equipment">
+                            <div class="stat-icon">🚜</div>
+                            <div class="stat-value" id="totalEquipment">0</div>
+                            <div class="stat-label">Mezzi Disponibili</div>
+                            <div class="stat-change negative">
+                                <span>↓ 2%</span>
+                                <span>dall'ultimo mese</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card card-cost">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-value" id="totalCost">0 €</div>
+                            <div class="stat-label">Costo Totale</div>
+                            <div class="stat-change positive">
+                                <span>↑ 8%</span>
+                                <span>dall'ultimo mese</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Sotto-categoria</label>
-                        <select id="newWorkSubcategory" class="form-control">
-                            <option value="">Seleziona tipo...</option>
-                        </select>
+                    
+                    <!-- Recent Reports -->
+                    <div class="table-container">
+                        <div class="table-header">
+                            <div class="table-title">Rapportini Recenti</div>
+                            <button class="btn btn-sm btn-primary" onclick="navigateTo('reports')">
+                                Vedi Tutti
+                            </button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Cantiere</th>
+                                    <th>Lavorazioni</th>
+                                    <th>Ore Totali</th>
+                                    <th>Costo</th>
+                                    <th>Stato</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentReports">
+                                <!-- Popolato dinamicamente -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Descrizione Lavoro *</label>
-                        <input type="text" id="newWorkDescription" class="form-control" 
-                               placeholder="Es. Getto calcestruzzo fondazioni">
+                <!-- New Report Page -->
+                <div id="newReportPage" class="page-content" style="display: none;">
+                    <!-- Progress Steps -->
+                    <div class="progress-steps">
+                        <div class="progress-step active" data-step="1">
+                            <div class="step-circle">1</div>
+                            <div class="step-label">Informazioni</div>
+                        </div>
+                        <div class="progress-step" data-step="2">
+                            <div class="step-circle">2</div>
+                            <div class="step-label">Lavorazioni</div>
+                        </div>
+                        <div class="progress-step" data-step="3">
+                            <div class="step-circle">3</div>
+                            <div class="step-label">Riepilogo</div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Quantità</label>
-                        <input type="number" id="newWorkQuantity" class="form-control" min="0" step="0.01" value="1">
+                    
+                    <!-- Step 1: Informazioni -->
+                    <div class="form-container" id="step1">
+                        <h2 class="form-title">Informazioni Generali</h2>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">📅 Data Rapportino *</label>
+                                <input type="date" class="form-control" id="reportDate" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">🏗️ Cantiere *</label>
+                                <select class="form-control" id="reportSite" required>
+                                    <option value="">Seleziona cantiere...</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">🌤️ Condizioni Meteo</label>
+                                <select class="form-control" id="reportWeather">
+                                    <option value="">Seleziona...</option>
+                                    <option value="sole">☀️ Soleggiato</option>
+                                    <option value="nuvoloso">☁️ Nuvoloso</option>
+                                    <option value="pioggia">🌧️ Pioggia</option>
+                                    <option value="neve">❄️ Neve</option>
+                                    <option value="vento">💨 Ventoso</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">👷 Capocantiere</label>
+                                <input type="text" class="form-control" id="reportForeman" value="Mario Rossi" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">📝 Note e Osservazioni</label>
+                            <textarea class="form-control" id="reportNotes" rows="4" placeholder="Note sulla giornata, problemi riscontrati, ecc."></textarea>
+                        </div>
+                        
+                        <div class="action-bar">
+                            <button class="btn btn-primary" onclick="nextStep()">
+                                Avanti →
+                            </button>
+                        </div>
                     </div>
+                    
+                    <!-- Step 2: Lavorazioni -->
+                    <div class="form-container" id="step2" style="display: none;">
+                        <h2 class="form-title">Lavorazioni di Cantiere</h2>
+                        
+                        <div class="alert alert-success">
+                            <span class="alert-icon">💡</span>
+                            <span>Aggiungi tutte le lavorazioni eseguite oggi. Puoi assegnarle a operai o subappaltatori.</span>
+                        </div>
+                        
+                        <!-- Categorie Lavori -->
+                        <div id="workCategories">
+                            <!-- Popolato dinamicamente -->
+                        </div>
+                        
+                        <!-- Aggiungi Nuova Lavorazione -->
+                        <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%); border-radius: 16px;">
+                            <h3 style="color: #2c3e50; margin-bottom: 25px; font-size: 1.3rem;">➕ Nuova Lavorazione</h3>
+                            
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Categoria Lavoro</label>
+                                    <select class="form-control" id="newWorkCategory">
+                                        <option value="">Seleziona categoria...</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Descrizione *</label>
+                                    <input type="text" class="form-control" id="newWorkDescription" placeholder="Es. Getto calcestruzzo fondazioni">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Quantità</label>
+                                    <div style="display: flex; gap: 10px;">
+                                        <input type="number" class="form-control" id="newWorkQuantity" value="1" step="0.01" min="0">
+                                        <select class="form-control" id="newWorkUnit" style="min-width: 120px;">
+                                            <option value="ore">Ore</option>
+                                            <option value="m2">m²</option>
+                                            <option value="m3">m³</option>
+                                            <option value="ml">ml</option>
+                                            <option value="pz">Pezzi</option>
+                                            <option value="kg">kg</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Ore Lavoro *</label>
+                                    <input type="number" class="form-control" id="newWorkHours" value="8" min="0" max="24" step="0.5">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Eseguito Da *</label>
+                                    <select class="form-control" id="newWorkPerformer" multiple style="height: auto; min-height: 46px;">
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Costo/Unità (€)</label>
+                                    <input type="number" class="form-control" id="newWorkCost" value="0" step="0.01" min="0">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Note Specifiche</label>
+                                <textarea class="form-control" id="newWorkNotes" rows="2" placeholder="Dettagli aggiuntivi sul lavoro..."></textarea>
+                            </div>
+                            
+                            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                                <button class="btn btn-success" onclick="addWorkItem()">
+                                    ➕ Aggiungi Lavorazione
+                                </button>
+                                <button class="btn btn-outline" onclick="saveWorkTemplate()">
+                                    💾 Salva Template
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="action-bar">
+                            <button class="btn btn-outline" onclick="prevStep()">
+                                ← Indietro
+                            </button>
+                            <button class="btn btn-primary" onclick="nextStep()">
+                                Avanti →
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Riepilogo -->
+                    <div class="form-container" id="step3" style="display: none;">
+                        <h2 class="form-title">Riepilogo Finale</h2>
+                        
+                        <!-- Summary Cards -->
+                        <div class="dashboard-cards" style="margin-bottom: 40px;">
+                            <div class="stat-card">
+                                <div class="stat-icon">🔨</div>
+                                <div class="stat-value" id="summaryWorks">0</div>
+                                <div class="stat-label">Lavorazioni</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">⏱️</div>
+                                <div class="stat-value" id="summaryHours">0</div>
+                                <div class="stat-label">Ore Totali</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">👷</div>
+                                <div class="stat-value" id="summaryWorkers">0</div>
+                                <div class="stat-label">Operai Coinvolti</div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">💰</div>
+                                <div class="stat-value" id="summaryCost">0 €</div>
+                                <div class="stat-label">Costo Totale</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dettaglio Lavorazioni -->
+                        <div class="table-container" style="margin-bottom: 30px;">
+                            <div class="table-header">
+                                <div class="table-title">Dettaglio Lavorazioni</div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Lavorazione</th>
+                                        <th>Categoria</th>
+                                        <th>Quantità</th>
+                                        <th>Ore</th>
+                                        <th>Eseguito Da</th>
+                                        <th>Costo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="worksSummary">
+                                    <!-- Popolato dinamicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="action-bar" style="justify-content: space-between;">
+                            <div style="display: flex; gap: 15px;">
+                                <button class="btn btn-outline" onclick="prevStep()">
+                                    ← Modifica
+                                </button>
+                                <button class="btn btn-danger" onclick="resetReport()">
+                                    ❌ Annulla
+                                </button>
+                            </div>
+                            <div style="display: flex; gap: 15px;">
+                                <button class="btn btn-outline" onclick="saveDraft()">
+                                    💾 Salva Bozza
+                                </button>
+                                <button class="btn btn-success" onclick="saveReport()">
+                                    ✅ Salva Rapportino
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Works Management Page -->
+                <div id="worksPage" class="page-content" style="display: none;">
+                    <div class="form-container">
+                        <h2 class="form-title">Gestione Lavorazioni</h2>
+                        
+                        <!-- Work Categories -->
+                        <div class="work-categories" id="manageWorkCategories">
+                            <!-- Popolato dinamicamente -->
+                        </div>
+                        
+                        <!-- Template Library -->
+                        <div style="margin-top: 40px;">
+                            <h3 style="color: #2c3e50; margin-bottom: 25px; font-size: 1.3rem;">📚 Biblioteca Template</h3>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Template</th>
+                                            <th>Categoria</th>
+                                            <th>Quantità Tipica</th>
+                                            <th>Ore Tipiche</th>
+                                            <th>Costo Tipico</th>
+                                            <th>Azioni</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="workTemplatesList">
+                                        <!-- Popolato dinamicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Workers Management Page -->
+                <div id="workersPage" class="page-content" style="display: none;">
+                    <div class="form-container">
+                        <h2 class="form-title">Gestione Operai</h2>
+                        
+                        <!-- Add Worker Form -->
+                        <div style="margin-bottom: 30px; padding: 25px; background: linear-gradient(135deg, rgba(79, 172, 254, 0.05) 0%, rgba(0, 242, 254, 0.05) 100%); border-radius: 16px;">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Nome e Cognome *</label>
+                                    <input type="text" class="form-control" id="newWorkerName" placeholder="Mario Rossi">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Codice Operaio *</label>
+                                    <input type="text" class="form-control" id="newWorkerCode" placeholder="OP001">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Specializzazione</label>
+                                    <input type="text" class="form-control" id="newWorkerSpecialty" placeholder="Carpentiere">
+                                </div>
+                                
+                                <div class="form-group" style="align-self: flex-end;">
+                                    <button class="btn btn-success" onclick="addWorker()">
+                                        ➕ Aggiungi Operaio
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Workers List -->
+                        <div class="table-container">
+                            <div class="table-header">
+                                <div class="table-title">Operai Registrati</div>
+                                <div class="table-actions">
+                                    <span class="status-badge status-completed" id="activeWorkersCount">0 attivi</span>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Operaio</th>
+                                        <th>Codice</th>
+                                        <th>Specializzazione</th>
+                                        <th>Stato</th>
+                                        <th>Ultimo Lavoro</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="workersList">
+                                    <!-- Popolato dinamicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Equipment Management Page -->
+                <div id="equipmentPage" class="page-content" style="display: none;">
+                    <div class="form-container">
+                        <h2 class="form-title">Gestione Mezzi</h2>
+                        
+                        <!-- Add Equipment Form -->
+                        <div style="margin-bottom: 30px; padding: 25px; background: linear-gradient(135deg, rgba(67, 233, 123, 0.05) 0%, rgba(56, 249, 215, 0.05) 100%); border-radius: 16px;">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Nome Mezzo *</label>
+                                    <input type="text" class="form-control" id="newEquipmentName" placeholder="Escavatore CAT 320">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Tipo Mezzo *</label>
+                                    <select class="form-control" id="newEquipmentType">
+                                        <option value="">Seleziona tipo...</option>
+                                        <option value="escavatore">Escavatore</option>
+                                        <option value="ruspa">Ruspa</option>
+                                        <option value="gru">Gru</option>
+                                        <option value="betoniera">Betoniera</option>
+                                        <option value="autocarro">Autocarro</option>
+                                        <option value="altro">Altro</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Targa/Matricola</label>
+                                    <input type="text" class="form-control" id="newEquipmentPlate" placeholder="AA123BB">
+                                </div>
+                                
+                                <div class="form-group" style="align-self: flex-end;">
+                                    <button class="btn btn-success" onclick="addEquipment()">
+                                        ➕ Aggiungi Mezzo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Equipment List -->
+                        <div class="table-container">
+                            <div class="table-header">
+                                <div class="table-title">Mezzi Disponibili</div>
+                                <div class="table-actions">
+                                    <span class="status-badge status-completed" id="activeEquipmentCount">0 attivi</span>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Mezzo</th>
+                                        <th>Tipo</th>
+                                        <th>Targa</th>
+                                        <th>Stato</th>
+                                        <th>Ultimo Utilizzo</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="equipmentList">
+                                    <!-- Popolato dinamicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Subcontractors Management Page -->
+                <div id="subcontractorsPage" class="page-content" style="display: none;">
+                    <div class="form-container">
+                        <h2 class="form-title">Gestione Subappaltatori</h2>
+                        
+                        <!-- Add Subcontractor Form -->
+                        <div style="margin-bottom: 30px; padding: 25px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%); border-radius: 16px;">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Ragione Sociale *</label>
+                                    <input type="text" class="form-control" id="newSubcontractorName" placeholder="EdilCostruzioni S.r.l.">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Partita IVA *</label>
+                                    <input type="text" class="form-control" id="newSubcontractorPiva" placeholder="12345678901">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Specializzazione</label>
+                                    <input type="text" class="form-control" id="newSubcontractorSpecialty" placeholder="Costruzioni civili">
+                                </div>
+                                
+                                <div class="form-group" style="align-self: flex-end;">
+                                    <button class="btn btn-success" onclick="addSubcontractor()">
+                                        ➕ Aggiungi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Subcontractors List -->
+                        <div class="table-container">
+                            <div class="table-header">
+                                <div class="table-title">Subappaltatori Registrati</div>
+                                <div class="table-actions">
+                                    <span class="status-badge status-completed" id="activeSubcontractorsCount">0 attivi</span>
+                                </div>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Azienda</th>
+                                        <th>P.IVA</th>
+                                        <th>Specializzazione</th>
+                                        <th>Stato</th>
+                                        <th>Ultimo Lavoro</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="subcontractorsList">
+                                    <!-- Popolato dinamicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reports Archive Page -->
+                <div id="reportsPage" class="page-content" style="display: none;">
+                    <div class="form-container">
+                        <h2 class="form-title">Archivio Rapportini</h2>
+                        
+                        <!-- Filters -->
+                        <div style="margin-bottom: 30px; padding: 25px; background: #f8fafc; border-radius: 16px;">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Periodo Da</label>
+                                    <input type="date" class="form-control" id="filterDateFrom">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Periodo A</label>
+                                    <input type="date" class="form-control" id="filterDateTo">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Cantiere</label>
+                                    <select class="form-control" id="filterSite">
+                                        <option value="">Tutti i cantieri</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group" style="align-self: flex-end;">
+                                    <button class="btn btn-primary" onclick="filterReports()">
+                                        🔍 Applica Filtri
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Reports List -->
+                        <div class="table-container">
+                            <div class="table-header">
+                                <div class="table-title">Rapportini</div>
+                                <button class="btn btn-sm btn-success" onclick="exportReports()">
+                                    📊 Esporta Excel
+                                </button>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Cantiere</th>
+                                        <th>Lavorazioni</th>
+                                        <th>Ore</th>
+                                        <th>Costo</th>
+                                        <th>Stato</th>
+                                        <th>Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allReportsList">
+                                    <!-- Popolato dinamicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Page -->
+                <div id="settingsPage" class="page-content" style="display: none;">
+                    <div class="form-container">
+                        <h2 class="form-title">Impostazioni Sistema</h2>
+                        
+                        <!-- Backup Section -->
+                        <div style="margin-bottom: 40px;">
+                            <h3 style="color: #2c3e50; margin-bottom: 20px; font-size: 1.2rem;">💾 Backup e Ripristino</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <button class="btn btn-primary" onclick="createBackup()">
+                                        💾 Crea Backup
+                                    </button>
+                                    <p style="margin-top: 10px; color: #7f8c8d; font-size: 0.9rem;">
+                                        Salva tutti i dati in un file JSON
+                                    </p>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <button class="btn btn-outline" onclick="restoreBackup()">
+                                        🔄 Ripristina Backup
+                                    </button>
+                                    <p style="margin-top: 10px; color: #7f8c8d; font-size: 0.9rem;">
+                                        Carica dati da un backup esistente
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Work Categories Settings -->
+                        <div style="margin-bottom: 40px;">
+                            <h3 style="color: #2c3e50; margin-bottom: 20px; font-size: 1.2rem;">🗂️ Gestione Categorie Lavori</h3>
+                            <div id="settingsWorkCategories">
+                                <!-- Popolato dinamicamente -->
+                            </div>
+                        </div>
+                        
+                        <!-- System Info -->
+                        <div style="padding: 25px; background: #f8fafc; border-radius: 16px;">
+                            <h3 style="color: #2c3e50; margin-bottom: 20px; font-size: 1.2rem;">ℹ️ Informazioni Sistema</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Versione</label>
+                                    <div style="padding: 12px; background: white; border-radius: 8px; border: 1px solid #eaeef5;">
+                                        <strong>2.0.0</strong>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Data Installazione</label>
+                                    <div style="padding: 12px; background: white; border-radius: 8px; border: 1px solid #eaeef5;">
+                                        <span id="installDate">-</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Totale Dati</label>
+                                    <div style="padding: 12px; background: white; border-radius: 8px; border: 1px solid #eaeef5;">
+                                        <span id="totalDataSize">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal per visualizzare rapportino -->
+    <div id="viewReportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="viewReportTitle">Dettagli Rapportino</h2>
+                <button class="close-modal" onclick="closeModal('viewReportModal')">×</button>
+            </div>
+            <div class="modal-body" id="viewReportContent">
+                <!-- Popolato dinamicamente -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal per template lavori -->
+    <div id="workTemplateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Nuovo Template Lavorazione</h2>
+                <button class="close-modal" onclick="closeModal('workTemplateModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
                     <div class="form-group">
-                        <label>Unità di misura</label>
-                        <select id="newWorkUnit" class="form-control">
+                        <label class="form-label">Nome Template *</label>
+                        <input type="text" class="form-control" id="templateName" placeholder="Es. Getto calcestruzzo">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Categoria *</label>
+                        <select class="form-control" id="templateCategory">
+                            <option value="">Seleziona categoria...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Unità di Misura</label>
+                        <select class="form-control" id="templateUnit">
                             <option value="ore">Ore</option>
                             <option value="m2">m²</option>
                             <option value="m3">m³</option>
                             <option value="ml">ml</option>
                             <option value="pz">Pezzi</option>
-                            <option value="kg">kg</option>
-                            <option value="l">Litri</option>
                         </select>
                     </div>
                 </div>
                 
-                <div class="form-row">
+                <div class="form-grid">
                     <div class="form-group">
-                        <label>Tempo Impiegato (ore) *</label>
-                        <input type="number" id="newWorkHours" class="form-control" min="0" max="24" step="0.5" value="1">
+                        <label class="form-label">Quantità Tipica</label>
+                        <input type="number" class="form-control" id="templateQuantity" value="1" step="0.01">
                     </div>
+                    
                     <div class="form-group">
-                        <label>Chi ha eseguito *</label>
-                        <select id="newWorkPerformer" class="form-control" multiple style="height: auto; min-height: 42px;">
-                            <!-- Popolato dinamicamente -->
-                        </select>
+                        <label class="form-label">Ore Tipiche</label>
+                        <input type="number" class="form-control" id="templateHours" value="8" step="0.5">
                     </div>
+                    
                     <div class="form-group">
-                        <label>Costo/Unità (€)</label>
-                        <input type="number" id="newWorkCost" class="form-control" min="0" step="0.01" value="0">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Note</label>
-                        <textarea id="newWorkNotes" class="form-control" rows="2" placeholder="Note specifiche sul lavoro..."></textarea>
+                        <label class="form-label">Costo Tipico (€)</label>
+                        <input type="number" class="form-control" id="templateCost" value="0" step="0.01">
                     </div>
                 </div>
                 
-                <div style="text-align: center; margin-top: 20px;">
-                    <button type="button" class="btn btn-success" onclick="addWorkItem()">
-                        ➕ Aggiungi Lavorazione
+                <div class="form-group">
+                    <label class="form-label">Descrizione</label>
+                    <textarea class="form-control" id="templateDescription" rows="3" placeholder="Descrizione dettagliata del lavoro..."></textarea>
+                </div>
+                
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="saveWorkTemplateModal()">
+                        💾 Salva Template
                     </button>
-                    <button type="button" class="btn btn-secondary" onclick="saveWorkTemplate()">
-                        💾 Salva come Template
-                    </button>
                 </div>
-            </div>
-            
-            <!-- Riepilogo lavorazioni -->
-            <div class="work-summary">
-                <h4 style="color: #1a3c8b; margin-bottom: 15px;">📊 Riepilogo Lavorazioni</h4>
-                <div class="work-summary-item">
-                    <span>Totale Lavorazioni:</span>
-                    <strong id="totalWorksCount">0</strong>
-                </div>
-                <div class="work-summary-item">
-                    <span>Ore Totali Lavori:</span>
-                    <strong id="totalWorksHours">0</strong>
-                </div>
-                <div class="work-summary-item">
-                    <span>Quantità Totale:</span>
-                    <strong id="totalWorksQuantity">0</strong>
-                </div>
-                <div class="work-summary-item" style="border-bottom: none; font-weight: bold;">
-                    <span>Costo Stimato Lavori:</span>
-                    <strong style="color: #28a745;" id="totalWorksCost">0 €</strong>
-                </div>
-            </div>
-            
-            <!-- Quick buttons per lavori comuni -->
-            <div class="quick-work-buttons" id="quickWorksButtons">
-                <!-- Popolato dinamicamente -->
-            </div>
-        </div>
-        
-        ... esistente continua ...
-    -->
-    
-    <!-- Aggiungi questa nuova modal -->
-    <!--
-    <div id="workTemplatesModal" class="modal">
-        <div class="modal-content" style="max-width: 900px;">
-            <div class="modal-header">
-                <h3>📚 Biblioteca Lavorazioni</h3>
-                <button class="close-modal" onclick="closeModal('workTemplatesModal')">×</button>
-            </div>
-            <div id="workTemplatesContent">
-                <!-- Popolato dinamicamente -->
             </div>
         </div>
     </div>
-    -->
-
-    <script>
-        // AGGIUNGI QUESTE VARIABILI ALL'INIZIO DEL SCRIPT
-        let workCategories = [];
-        let workTemplates = [];
-        let currentWorks = [];
-        
-        // CATEGORIE LAVORI PREDEFINITE
-        const DEFAULT_WORK_CATEGORIES = [
-            {
-                id: 1,
-                name: "Scavi e Fondazioni",
-                subcategories: ["Scavo meccanico", "Scavo manuale", "Fondazioni", "Platee", "Pali"],
-                icon: "⛏️"
-            },
-            {
-                id: 2,
-                name: "Strutture in Cemento",
-                subcategories: ["Carpenterie", "Getti", "Finiture", "Pavimenti", "Travi", "Pilastri"],
-                icon: "🏗️"
-            },
-            {
-                id: 3,
-                name: "Murature",
-                subcategories: ["Muratura portante", "Tramezzi", "Intonaci", "Rasature", "Isolamenti"],
-                icon: "🧱"
-            },
-            {
-                id: 4,
-                name: "Impianti",
-                subcategories: ["Elettrico", "Idraulico", "Termico", "Climatizzazione", "Antincendio"],
-                icon: "🔌"
-            },
-            {
-                id: 5,
-                name: "Finitura Interna",
-                subcategories: ["Pavimenti", "Rivestimenti", "Cartongesso", "Pittura", "Infissi"],
-                icon: "🎨"
-            },
-            {
-                id: 6,
-                name: "Esterno e Strutture",
-                subcategories: ["Coperture", "Facilità", "Pavimentazioni esterne", "Recinzioni", "Scale"],
-                icon: "🏡"
-            }
-        ];
-        
-        // MODELLO LAVORAZIONE
-        class WorkItem {
-            constructor(data = {}) {
-                this.id = data.id || Date.now() + Math.random();
-                this.category = data.category || "";
-                this.subcategory = data.subcategory || "";
-                this.description = data.description || "";
-                this.quantity = data.quantity || 1;
-                this.unit = data.unit || "ore";
-                this.hours = data.hours || 0;
-                this.performers = data.performers || []; // Array di {type: 'worker'|'subcontractor', id: X}
-                this.costPerUnit = data.costPerUnit || 0;
-                this.totalCost = data.totalCost || 0;
-                this.notes = data.notes || "";
-                this.date = data.date || new Date().toISOString().split('T')[0];
-                this.materials = data.materials || []; // Array di materiali usati
-                this.status = data.status || "completed"; // planned, in-progress, completed
-            }
-            
-            calculateCost() {
-                this.totalCost = this.quantity * this.costPerUnit;
-                return this.totalCost;
-            }
-        }
-        
-        // INIZIALIZZAZIONE - Aggiungi queste chiamate nel DOMContentLoaded
-        function loadWorksData() {
-            // Carica categorie
-            const savedCategories = localStorage.getItem('cantiereWorkCategories');
-            if (savedCategories) {
-                workCategories = JSON.parse(savedCategories);
-            } else {
-                workCategories = DEFAULT_WORK_CATEGORIES;
-                saveWorkCategories();
-            }
-            
-            // Carica templates
-            const savedTemplates = localStorage.getItem('cantiereWorkTemplates');
-            if (savedTemplates) {
-                workTemplates = JSON.parse(savedTemplates);
-            } else {
-                // Templates predefiniti
-                workTemplates = [
-                    {
-                        id: 1,
-                        name: "Scavo meccanico fondazioni",
-                        category: "Scavi e Fondazioni",
-                        subcategory: "Scavo meccanico",
-                        description: "Scavo per fondazioni con escavatore",
-                        unit: "m3",
-                        typicalHours: 4,
-                        typicalQuantity: 50,
-                        typicalCost: 25 // €/m3
-                    },
-                    {
-                        id: 2,
-                        name: "Getto calcestruzzo platea",
-                        category: "Strutture in Cemento",
-                        subcategory: "Getti",
-                        description: "Getto platea in calcestruzzo C25/30",
-                        unit: "m3",
-                        typicalHours: 8,
-                        typicalQuantity: 30,
-                        typicalCost: 120 // €/m3
-                    }
-                ];
-                saveWorkTemplates();
-            }
-            
-            // Inizializza UI lavori
-            initWorksUI();
-        }
-        
-        // INIZIALIZZA UI LAVORI
-        function initWorksUI() {
-            // Crea la sezione lavorazioni
-            createWorksSection();
-            
-            // Popola select categorie
-            updateWorkCategorySelect();
-            
-            // Popola select performer
-            updateWorkPerformerSelect();
-            
-            // Aggiorna categorie lavori UI
-            updateWorkCategoriesUI();
-            
-            // Aggiorna quick buttons
-            updateQuickWorkButtons();
-        }
-        
-        // CREA SEZIONE LAVORI NEL FORM
-        function createWorksSection() {
-            const newReportSection = document.getElementById('newReport');
-            const subcontractorSection = document.querySelector('#newReport .form-section:has(#subcontractorsList)');
-            
-            const worksHTML = `
-                <div class="form-section" id="worksSection">
-                    <h3 class="section-title">🔨 Lavorazioni di Cantiere
-                        <button type="button" class="btn btn-sm btn-success" onclick="openWorkTemplates()">
-                            📚 Biblioteca Lavori
-                        </button>
-                        <button type="button" class="btn btn-sm btn-info" onclick="openManageModal('workCategories')">
-                            🗂️ Gestisci Categorie
-                        </button>
-                    </h3>
-                    
-                    <div id="worksAlert" class="alert alert-info">
-                        <span class="alert-icon">💡</span>
-                        <span>Aggiungi le lavorazioni eseguite oggi in cantiere</span>
+    
+    <!-- Modal per categoria lavori -->
+    <div id="workCategoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Gestione Categoria Lavori</h2>
+                <button class="close-modal" onclick="closeModal('workCategoryModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Nome Categoria *</label>
+                    <input type="text" class="form-control" id="categoryName" placeholder="Es. Strutture in Cemento">
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Icona</label>
+                        <select class="form-control" id="categoryIcon">
+                            <option value="🏗️">🏗️ Costruzioni</option>
+                            <option value="🔨">🔨 Lavori</option>
+                            <option value="🧱">🧱 Muratura</option>
+                            <option value="🎨">🎨 Finiture</option>
+                            <option value="🔌">🔌 Impianti</option>
+                            <option value="⛏️">⛏️ Scavi</option>
+                            <option value="🚧">🚧 Cantiere</option>
+                        </select>
                     </div>
                     
-                    <div id="workCategoriesContainer">
-                        <!-- Popolato dinamicamente -->
-                    </div>
-                    
-                    <div style="margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 8px;">
-                        <h4 style="color: #1a3c8b; margin-bottom: 15px;">➕ Aggiungi Nuova Lavorazione</h4>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Categoria Lavoro</label>
-                                <select id="newWorkCategory" class="form-control" onchange="updateWorkSubcategories()">
-                                    <option value="">Seleziona categoria...</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Sotto-categoria</label>
-                                <select id="newWorkSubcategory" class="form-control">
-                                    <option value="">Seleziona tipo...</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Descrizione Lavoro *</label>
-                                <input type="text" id="newWorkDescription" class="form-control" 
-                                       placeholder="Es. Getto calcestruzzo fondazioni">
-                            </div>
-                            <div class="form-group">
-                                <label>Quantità</label>
-                                <input type="number" id="newWorkQuantity" class="form-control" min="0" step="0.01" value="1">
-                            </div>
-                            <div class="form-group">
-                                <label>Unità di misura</label>
-                                <select id="newWorkUnit" class="form-control">
-                                    <option value="ore">Ore</option>
-                                    <option value="m2">m²</option>
-                                    <option value="m3">m³</option>
-                                    <option value="ml">ml</option>
-                                    <option value="pz">Pezzi</option>
-                                    <option value="kg">kg</option>
-                                    <option value="l">Litri</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Tempo Impiegato (ore) *</label>
-                                <input type="number" id="newWorkHours" class="form-control" min="0" max="24" step="0.5" value="1">
-                            </div>
-                            <div class="form-group">
-                                <label>Chi ha eseguito *</label>
-                                <select id="newWorkPerformer" class="form-control" multiple style="height: auto; min-height: 42px;">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Costo/Unità (€)</label>
-                                <input type="number" id="newWorkCost" class="form-control" min="0" step="0.01" value="0">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Note</label>
-                                <textarea id="newWorkNotes" class="form-control" rows="2" placeholder="Note specifiche sul lavoro..."></textarea>
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 20px;">
-                            <button type="button" class="btn btn-success" onclick="addWorkItem()">
-                                ➕ Aggiungi Lavorazione
-                            </button>
-                            <button type="button" class="btn btn-secondary" onclick="saveWorkTemplate()">
-                                💾 Salva come Template
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="work-summary">
-                        <h4 style="color: #1a3c8b; margin-bottom: 15px;">📊 Riepilogo Lavorazioni</h4>
-                        <div class="work-summary-item">
-                            <span>Totale Lavorazioni:</span>
-                            <strong id="totalWorksCount">0</strong>
-                        </div>
-                        <div class="work-summary-item">
-                            <span>Ore Totali Lavori:</span>
-                            <strong id="totalWorksHours">0</strong>
-                        </div>
-                        <div class="work-summary-item">
-                            <span>Quantità Totale:</span>
-                            <strong id="totalWorksQuantity">0</strong>
-                        </div>
-                        <div class="work-summary-item" style="border-bottom: none; font-weight: bold;">
-                            <span>Costo Stimato Lavori:</span>
-                            <strong style="color: #28a745;" id="totalWorksCost">0 €</strong>
-                        </div>
-                    </div>
-                    
-                    <div class="quick-work-buttons" id="quickWorksButtons">
+                    <div class="form-group">
+                        <label class="form-label">Colore</label>
+                        <input type="color" class="form-control" id="categoryColor" value="#667eea" style="height: 46px;">
                     </div>
                 </div>
-            `;
+                
+                <div class="form-group">
+                    <label class="form-label">Sottocategorie (separate da virgola)</label>
+                    <textarea class="form-control" id="categorySubcategories" rows="3" placeholder="Es. Getti, Carpenterie, Finiture, Travi..."></textarea>
+                </div>
+                
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="saveWorkCategory()">
+                        💾 Salva Categoria
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // SISTEMA DATI COMPLETO
+        let systemData = {
+            // Dati Utente
+            currentUser: {
+                id: 1,
+                name: "Mario Rossi",
+                role: "admin",
+                lastLogin: new Date().toISOString()
+            },
             
-            if (subcontractorSection) {
-                subcontractorSection.insertAdjacentHTML('afterend', worksHTML);
+            // Rapportini
+            reports: [],
+            
+            // Liste base
+            workers: [],
+            equipment: [],
+            subcontractors: [],
+            sites: [],
+            
+            // Sistema Lavorazioni
+            workCategories: [],
+            workTemplates: [],
+            
+            // Bozze
+            drafts: [],
+            
+            // Configurazione
+            settings: {
+                hourlyWorkerCost: 25,
+                hourlyEquipmentCost: 80,
+                defaultUnit: "ore",
+                autoSave: true,
+                backupFrequency: "weekly",
+                installDate: new Date().toISOString()
             }
+        };
+        
+        // Stato applicazione
+        let appState = {
+            currentPage: "dashboard",
+            currentStep: 1,
+            currentWorks: [],
+            editingWorkCategory: null,
+            editingTemplate: null
+        };
+        
+        // INIZIALIZZAZIONE
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+        });
+        
+        function initApp() {
+            loadAllData();
+            initNavigation();
+            initForms();
+            loadDashboard();
+            updateUserInfo();
+            checkAutoLogin();
         }
         
-        // POPOLA SELECT CATEGORIE
-        function updateWorkCategorySelect() {
-            const select = document.getElementById('newWorkCategory');
-            if (!select) return;
+        // CARICA TUTTI I DATI
+        function loadAllData() {
+            // Carica da localStorage
+            const savedData = localStorage.getItem('cantiereProData');
             
-            select.innerHTML = '<option value="">Seleziona categoria...</option>' +
-                workCategories.map(cat => `
-                    <option value="${cat.id}">${cat.icon || '📁'} ${cat.name}</option>
-                `).join('');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                systemData = { ...systemData, ...data };
+            } else {
+                // Dati predefiniti
+                setupDefaultData();
+            }
+            
+            // Aggiorna UI
+            updateSelects();
+            updateLists();
         }
         
-        // AGGIORNA SOTTO-CATEGORIE
-        function updateWorkSubcategories() {
-            const categoryId = document.getElementById('newWorkCategory').value;
-            const subSelect = document.getElementById('newWorkSubcategory');
+        function setupDefaultData() {
+            // Operai predefiniti
+            systemData.workers = [
+                { id: 1, name: "Mario Rossi", code: "OP001", specialty: "Capocantiere", active: true, createdAt: new Date().toISOString() },
+                { id: 2, name: "Luigi Verdi", code: "OP002", specialty: "Carpentiere", active: true, createdAt: new Date().toISOString() },
+                { id: 3, name: "Giovanni Bianchi", code: "OP003", specialty: "Muratore", active: true, createdAt: new Date().toISOString() },
+                { id: 4, name: "Paolo Neri", code: "OP004", specialty: "Elettricista", active: true, createdAt: new Date().toISOString() },
+                { id: 5, name: "Antonio Gialli", code: "OP005", specialty: "Idraulico", active: true, createdAt: new Date().toISOString() }
+            ];
             
-            subSelect.innerHTML = '<option value="">Seleziona tipo...</option>';
+            // Mezzi predefiniti
+            systemData.equipment = [
+                { id: 1, name: "Escavatore CAT 320", type: "escavatore", plate: "AA123BB", active: true, createdAt: new Date().toISOString() },
+                { id: 2, name: "Ruspa Komatsu", type: "ruspa", plate: "BB456CC", active: true, createdAt: new Date().toISOString() },
+                { id: 3, name: "Gru Liebherr", type: "gru", plate: "CC789DD", active: true, createdAt: new Date().toISOString() },
+                { id: 4, name: "Betoniera", type: "betoniera", plate: "DD012EE", active: true, createdAt: new Date().toISOString() },
+                { id: 5, name: "Autocarro Iveco", type: "autocarro", plate: "EE345FF", active: true, createdAt: new Date().toISOString() }
+            ];
             
-            if (!categoryId) return;
+            // Subappaltatori predefiniti
+            systemData.subcontractors = [
+                { id: 1, name: "EdilCostruzioni S.r.l.", piva: "12345678901", specialty: "Costruzioni civili", active: true, createdAt: new Date().toISOString() },
+                { id: 2, name: "IdroService S.n.c.", piva: "23456789012", specialty: "Impianti idraulici", active: true, createdAt: new Date().toISOString() },
+                { id: 3, name: "ElettroImpianti S.r.l.", piva: "34567890123", specialty: "Impianti elettrici", active: true, createdAt: new Date().toISOString() }
+            ];
             
-            const category = workCategories.find(c => c.id == categoryId);
-            if (category && category.subcategories) {
-                category.subcategories.forEach(sub => {
-                    subSelect.innerHTML += `<option value="${sub}">${sub}</option>`;
+            // Cantieri predefiniti
+            systemData.sites = [
+                { id: 1, name: "Cantiere Via Roma", address: "Via Roma, 123", city: "Roma", active: true, createdAt: new Date().toISOString() },
+                { id: 2, name: "Cantiere Piazza Garibaldi", address: "Piazza Garibaldi, 45", city: "Milano", active: true, createdAt: new Date().toISOString() },
+                { id: 3, name: "Cantiere Centro Commerciale", address: "Viale Europa, 78", city: "Torino", active: true, createdAt: new Date().toISOString() }
+            ];
+            
+            // Categorie lavori predefinite
+            systemData.workCategories = [
+                { 
+                    id: 1, 
+                    name: "Scavi e Fondazioni", 
+                    icon: "⛏️", 
+                    color: "#4facfe",
+                    subcategories: ["Scavo meccanico", "Scavo manuale", "Fondazioni", "Platee", "Pali"],
+                    active: true 
+                },
+                { 
+                    id: 2, 
+                    name: "Strutture in Cemento", 
+                    icon: "🏗️", 
+                    color: "#667eea",
+                    subcategories: ["Carpenterie", "Getti", "Finiture", "Pavimenti", "Travi", "Pilastri"],
+                    active: true 
+                },
+                { 
+                    id: 3, 
+                    name: "Murature", 
+                    icon: "🧱", 
+                    color: "#fa709a",
+                    subcategories: ["Muratura portante", "Tramezzi", "Intonaci", "Rasature", "Isolamenti"],
+                    active: true 
+                },
+                { 
+                    id: 4, 
+                    name: "Impianti", 
+                    icon: "🔌", 
+                    color: "#43e97b",
+                    subcategories: ["Elettrico", "Idraulico", "Termico", "Climatizzazione", "Antincendio"],
+                    active: true 
+                },
+                { 
+                    id: 5, 
+                    name: "Finitura Interna", 
+                    icon: "🎨", 
+                    color: "#ff9a9e",
+                    subcategories: ["Pavimenti", "Rivestimenti", "Cartongesso", "Pittura", "Infissi"],
+                    active: true 
+                }
+            ];
+            
+            // Template predefiniti
+            systemData.workTemplates = [
+                { 
+                    id: 1, 
+                    name: "Scavo meccanico fondazioni", 
+                    categoryId: 1, 
+                    categoryName: "Scavi e Fondazioni",
+                    subcategory: "Scavo meccanico",
+                    unit: "m3", 
+                    typicalQuantity: 50,
+                    typicalHours: 4,
+                    typicalCost: 25,
+                    description: "Scavo per fondazioni con escavatore",
+                    active: true 
+                },
+                { 
+                    id: 2, 
+                    name: "Getto calcestruzzo platea", 
+                    categoryId: 2, 
+                    categoryName: "Strutture in Cemento",
+                    subcategory: "Getti",
+                    unit: "m3", 
+                    typicalQuantity: 30,
+                    typicalHours: 8,
+                    typicalCost: 120,
+                    description: "Getto platea in calcestruzzo C25/30",
+                    active: true 
+                }
+            ];
+            
+            saveAllData();
+        }
+        
+        // NAVIGAZIONE
+        function initNavigation() {
+            // Nav items click
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const page = this.getAttribute('data-page');
+                    navigateTo(page);
                 });
+            });
+        }
+        
+        function navigateTo(page) {
+            // Aggiorna nav attiva
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') === page) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Nascondi tutte le pagine
+            document.querySelectorAll('.page-content').forEach(p => {
+                p.style.display = 'none';
+            });
+            
+            // Mostra pagina richiesta
+            document.getElementById(page + 'Page').style.display = 'block';
+            appState.currentPage = page;
+            
+            // Aggiorna titolo pagina
+            updatePageTitle(page);
+            
+            // Carica contenuto specifico pagina
+            switch(page) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'new-report':
+                    initNewReport();
+                    break;
+                case 'works':
+                    loadWorkCategories();
+                    loadWorkTemplates();
+                    break;
+                case 'workers':
+                    loadWorkers();
+                    break;
+                case 'equipment':
+                    loadEquipment();
+                    break;
+                case 'subcontractors':
+                    loadSubcontractors();
+                    break;
+                case 'reports':
+                    loadReports();
+                    break;
+                case 'settings':
+                    loadSettings();
+                    break;
             }
         }
         
-        // POPOLA SELECT PERFORMER
-        function updateWorkPerformerSelect() {
-            const select = document.getElementById('newWorkPerformer');
-            if (!select) return;
+        function updatePageTitle(page) {
+            const titles = {
+                'dashboard': { title: 'Dashboard', desc: 'Panoramica generale del sistema' },
+                'new-report': { title: 'Nuovo Rapportino', desc: 'Crea un nuovo rapportino giornaliero' },
+                'works': { title: 'Gestione Lavorazioni', desc: 'Gestisci categorie e template lavori' },
+                'workers': { title: 'Gestione Operai', desc: 'Gestisci gli operai del cantiere' },
+                'equipment': { title: 'Gestione Mezzi', desc: 'Gestisci i mezzi di cantiere' },
+                'subcontractors': { title: 'Gestione Subappaltatori', desc: 'Gestisci i subappaltatori' },
+                'reports': { title: 'Archivio Rapportini', desc: 'Visualizza e gestisci i rapportini' },
+                'settings': { title: 'Impostazioni', desc: 'Configura il sistema' }
+            };
             
-            let options = '';
-            
-            // Operai
-            workers.filter(w => w.active).forEach(worker => {
-                options += `<option value="worker_${worker.id}">👷 ${worker.name} (Operaio)</option>`;
-            });
-            
-            // Subappaltatori
-            subcontractors.filter(s => s.active).forEach(sub => {
-                options += `<option value="sub_${sub.id}">🏢 ${sub.name} (Subappaltatore)</option>`;
-            });
-            
-            select.innerHTML = options;
+            const titleData = titles[page] || titles['dashboard'];
+            document.getElementById('pageTitle').textContent = titleData.title;
+            document.getElementById('pageDescription').textContent = titleData.desc;
         }
         
-        // AGGIUNGI LAVORAZIONE
+        // DASHBOARD
+        function loadDashboard() {
+            // Aggiorna statistiche
+            document.getElementById('totalReports').textContent = systemData.reports.length;
+            document.getElementById('totalWorkers').textContent = systemData.workers.filter(w => w.active).length;
+            document.getElementById('totalEquipment').textContent = systemData.equipment.filter(e => e.active).length;
+            
+            // Calcola costo totale
+            const totalCost = systemData.reports.reduce((sum, report) => sum + (report.totalCost || 0), 0);
+            document.getElementById('totalCost').textContent = formatCurrency(totalCost);
+            
+            // Carica rapportini recenti
+            loadRecentReports();
+        }
+        
+        function loadRecentReports() {
+            const container = document.getElementById('recentReports');
+            const recent = systemData.reports.slice(-5).reverse();
+            
+            if (recent.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #7f8c8d;">
+                            <div class="empty-state">
+                                <div class="empty-icon">📊</div>
+                                <p>Nessun rapportino ancora creato</p>
+                                <button class="btn btn-primary" onclick="navigateTo('new-report')" style="margin-top: 15px;">
+                                    Crea il primo rapportino
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            container.innerHTML = recent.map(report => `
+                <tr>
+                    <td><strong>${formatDate(report.date)}</strong></td>
+                    <td>${report.siteName}</td>
+                    <td>${report.works?.length || 0} lavori</td>
+                    <td>${report.totalHours || 0} ore</td>
+                    <td><strong style="color: #43e97b;">${formatCurrency(report.totalCost || 0)}</strong></td>
+                    <td><span class="status-badge status-completed">Completato</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline" onclick="viewReport(${report.id})">
+                            👁️ Dettagli
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // NUOVO RAPPORTINO - STEP SYSTEM
+        function initNewReport() {
+            // Reset stato
+            appState.currentStep = 1;
+            appState.currentWorks = [];
+            
+            // Aggiorna progress steps
+            updateProgressSteps();
+            
+            // Inizializza date
+            document.getElementById('reportDate').value = new Date().toISOString().split('T')[0];
+            
+            // Carica lavorazioni
+            loadWorkCategoriesForReport();
+            
+            // Aggiorna select performer
+            updatePerformerSelect();
+        }
+        
+        function updateProgressSteps() {
+            document.querySelectorAll('.progress-step').forEach(step => {
+                const stepNum = parseInt(step.getAttribute('data-step'));
+                step.classList.remove('active', 'completed');
+                
+                if (stepNum < appState.currentStep) {
+                    step.classList.add('completed');
+                } else if (stepNum === appState.currentStep) {
+                    step.classList.add('active');
+                }
+            });
+            
+            // Mostra passo corrente
+            document.querySelectorAll('#step1, #step2, #step3').forEach(step => {
+                step.style.display = 'none';
+            });
+            document.getElementById('step' + appState.currentStep).style.display = 'block';
+        }
+        
+        function nextStep() {
+            if (validateCurrentStep()) {
+                appState.currentStep++;
+                if (appState.currentStep > 3) appState.currentStep = 3;
+                updateProgressSteps();
+                
+                if (appState.currentStep === 3) {
+                    updateReportSummary();
+                }
+            }
+        }
+        
+        function prevStep() {
+            appState.currentStep--;
+            if (appState.currentStep < 1) appState.currentStep = 1;
+            updateProgressSteps();
+        }
+        
+        function validateCurrentStep() {
+            switch(appState.currentStep) {
+                case 1:
+                    const date = document.getElementById('reportDate').value;
+                    const site = document.getElementById('reportSite').value;
+                    
+                    if (!date) {
+                        showAlert('Inserisci la data del rapportino', 'error');
+                        return false;
+                    }
+                    
+                    if (!site) {
+                        showAlert('Seleziona un cantiere', 'error');
+                        return false;
+                    }
+                    
+                    return true;
+                    
+                case 2:
+                    if (appState.currentWorks.length === 0) {
+                        if (!confirm('Non hai aggiunto lavorazioni. Vuoi continuare comunque?')) {
+                            return false;
+                        }
+                    }
+                    return true;
+                    
+                default:
+                    return true;
+            }
+        }
+        
+        // LAVORAZIONI
+        function loadWorkCategoriesForReport() {
+            const container = document.getElementById('workCategories');
+            const categorySelect = document.getElementById('newWorkCategory');
+            
+            // Reset
+            container.innerHTML = '';
+            categorySelect.innerHTML = '<option value="">Seleziona categoria...</option>';
+            
+            // Popola categorie attive
+            systemData.workCategories
+                .filter(cat => cat.active)
+                .forEach(category => {
+                    // Aggiungi a select
+                    categorySelect.innerHTML += `<option value="${category.id}">${category.icon} ${category.name}</option>`;
+                    
+                    // Crea card categoria
+                    const categoryWorks = appState.currentWorks.filter(work => work.categoryId === category.id);
+                    
+                    if (categoryWorks.length > 0) {
+                        const card = document.createElement('div');
+                        card.className = 'work-category-card';
+                        card.innerHTML = `
+                            <div class="category-header" style="background: linear-gradient(135deg, ${category.color}99 0%, ${category.color} 100%);">
+                                <div class="category-icon">${category.icon}</div>
+                                <div class="category-title">
+                                    <h3>${category.name}</h3>
+                                    <div class="category-count">${categoryWorks.length} lavorazioni</div>
+                                </div>
+                            </div>
+                            <div class="category-body">
+                                ${categoryWorks.map(work => `
+                                    <div class="work-item">
+                                        <div class="work-item-info">
+                                            <div class="work-item-title">${work.description}</div>
+                                            <div class="work-item-details">
+                                                <div class="work-item-detail">
+                                                    <span>📏</span>
+                                                    <span>${work.quantity} ${work.unit}</span>
+                                                </div>
+                                                <div class="work-item-detail">
+                                                    <span>⏱️</span>
+                                                    <span>${work.hours} ore</span>
+                                                </div>
+                                            </div>
+                                            <div class="work-item-performers">
+                                                ${work.performers.map(p => `
+                                                    <span class="performer-badge">
+                                                        ${p.type === 'worker' ? '👷' : '🏢'}
+                                                        ${p.name}
+                                                    </span>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                        <div class="work-item-cost">
+                                            ${formatCurrency(work.totalCost)}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    }
+                });
+        }
+        
         function addWorkItem() {
             const categoryId = document.getElementById('newWorkCategory').value;
-            const subcategory = document.getElementById('newWorkSubcategory').value;
             const description = document.getElementById('newWorkDescription').value.trim();
             const quantity = parseFloat(document.getElementById('newWorkQuantity').value);
             const unit = document.getElementById('newWorkUnit').value;
             const hours = parseFloat(document.getElementById('newWorkHours').value);
-            const performerElements = document.getElementById('newWorkPerformer').selectedOptions;
             const costPerUnit = parseFloat(document.getElementById('newWorkCost').value);
             const notes = document.getElementById('newWorkNotes').value.trim();
             
             // Validazioni
+            if (!categoryId) {
+                showAlert('Seleziona una categoria', 'error');
+                return;
+            }
+            
             if (!description) {
-                alert('Inserisci la descrizione del lavoro');
+                showAlert('Inserisci la descrizione del lavoro', 'error');
                 return;
             }
             
             if (isNaN(hours) || hours <= 0) {
-                alert('Inserisci un numero di ore valido');
+                showAlert('Inserisci ore valide (maggiore di 0)', 'error');
                 return;
             }
             
-            if (performerElements.length === 0) {
-                alert('Seleziona chi ha eseguito il lavoro');
-                return;
-            }
-            
-            const category = workCategories.find(c => c.id == categoryId);
-            
-            // Crea array performers
-            const performers = Array.from(performerElements).map(opt => {
+            // Ottieni performers
+            const performerSelect = document.getElementById('newWorkPerformer');
+            const selectedPerformers = Array.from(performerSelect.selectedOptions).map(opt => {
                 const value = opt.value;
                 if (value.startsWith('worker_')) {
                     const workerId = value.split('_')[1];
-                    const worker = workers.find(w => w.id == workerId);
+                    const worker = systemData.workers.find(w => w.id == workerId);
                     return {
                         type: 'worker',
                         id: workerId,
-                        name: worker ? worker.name : 'Operaio sconosciuto'
+                        name: worker ? worker.name : 'Operaio'
                     };
                 } else if (value.startsWith('sub_')) {
                     const subId = value.split('_')[1];
-                    const sub = subcontractors.find(s => s.id == subId);
+                    const sub = systemData.subcontractors.find(s => s.id == subId);
                     return {
                         type: 'subcontractor',
                         id: subId,
-                        name: sub ? sub.name : 'Subappaltatore sconosciuto'
+                        name: sub ? sub.name : 'Subappaltatore'
                     };
                 }
                 return null;
             }).filter(p => p !== null);
             
+            if (selectedPerformers.length === 0) {
+                showAlert('Seleziona almeno un esecutore', 'error');
+                return;
+            }
+            
+            const category = systemData.workCategories.find(c => c.id == categoryId);
+            
             // Crea lavorazione
-            const workItem = new WorkItem({
-                category: category ? category.name : '',
-                subcategory: subcategory,
+            const workItem = {
+                id: Date.now(),
+                categoryId: categoryId,
+                categoryName: category ? category.name : '',
                 description: description,
                 quantity: quantity || 1,
                 unit: unit,
                 hours: hours,
-                performers: performers,
+                performers: selectedPerformers,
                 costPerUnit: costPerUnit,
-                notes: notes
-            });
+                totalCost: (quantity || 1) * costPerUnit,
+                notes: notes,
+                date: new Date().toISOString().split('T')[0]
+            };
             
-            // Calcola costo
-            workItem.calculateCost();
-            
-            // Aggiungi alla lista corrente
-            currentWorks.push(workItem);
+            // Aggiungi alla lista
+            appState.currentWorks.push(workItem);
             
             // Aggiorna UI
-            updateWorksUI();
-            updateWorkSummary();
+            loadWorkCategoriesForReport();
             
-            // Resetta form
-            resetWorkForm();
-            
-            // Mostra conferma
-            showAlert('✅ Lavorazione aggiunta con successo!', 'success', 'worksAlert');
-        }
-        
-        // AGGIORNA UI LAVORI
-        function updateWorksUI() {
-            const container = document.getElementById('workCategoriesContainer');
-            if (!container) return;
-            
-            // Raggruppa lavorazioni per categoria
-            const worksByCategory = {};
-            currentWorks.forEach(work => {
-                if (!worksByCategory[work.category]) {
-                    worksByCategory[work.category] = [];
-                }
-                worksByCategory[work.category].push(work);
-            });
-            
-            // Crea UI per ogni categoria
-            let html = '';
-            
-            workCategories.forEach(category => {
-                const categoryWorks = worksByCategory[category.name] || [];
-                
-                if (categoryWorks.length === 0) return;
-                
-                html += `
-                    <div class="work-category">
-                        <div class="work-category-header" onclick="toggleWorkCategory(${category.id})">
-                            <div>
-                                <strong>${category.icon || '📁'} ${category.name}</strong>
-                                <span class="badge badge-primary" style="margin-left: 10px;">${categoryWorks.length} lavori</span>
-                            </div>
-                            <div>▶️</div>
-                        </div>
-                        <div class="work-category-content" id="categoryContent_${category.id}">
-                            ${categoryWorks.map(work => renderWorkItem(work)).join('')}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = html || `
-                <div style="text-align: center; padding: 40px; color: #666;">
-                    <p>Nessuna lavorazione aggiunta</p>
-                    <p class="small">Aggiungi lavorazioni dal form qui sotto</p>
-                </div>
-            `;
-        }
-        
-        // RENDER SINGOLA LAVORAZIONE
-        function renderWorkItem(work) {
-            const performerNames = work.performers.map(p => p.name).join(', ');
-            
-            return `
-                <div class="work-item" id="work_${work.id}">
-                    <div>
-                        <strong>${work.description}</strong>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
-                            <span>${work.subcategory || 'Generico'}</span> • 
-                            <span>Eseguito da: ${performerNames}</span>
-                        </div>
-                        ${work.notes ? `<div style="font-size: 0.85rem; color: #777; margin-top: 3px;">📝 ${work.notes}</div>` : ''}
-                    </div>
-                    
-                    <div>
-                        <strong>${work.quantity} ${work.unit}</strong>
-                    </div>
-                    
-                    <div>
-                        <strong>${work.hours} ore</strong>
-                    </div>
-                    
-                    <div>
-                        <strong style="color: ${work.totalCost > 0 ? '#28a745' : '#666'}">
-                            ${work.totalCost.toFixed(2)} €
-                        </strong>
-                    </div>
-                    
-                    <div class="work-item-actions">
-                        <button class="btn btn-sm btn-warning" onclick="editWorkItem('${work.id}')">
-                            ✏️
-                        </button>
-                        <button class="btn btn-sm btn-danger" onclick="removeWorkItem('${work.id}')">
-                            ❌
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // TOGGLE CATEGORIA (espandi/contrai)
-        function toggleWorkCategory(categoryId) {
-            const content = document.getElementById(`categoryContent_${categoryId}`);
-            const header = content.previousElementSibling;
-            
-            content.classList.toggle('active');
-            header.classList.toggle('active');
-            
-            // Cambia icona
-            const icon = header.querySelector('div:last-child');
-            icon.textContent = content.classList.contains('active') ? '▼' : '▶️';
-        }
-        
-        // AGGIORNA RIEPILOGO
-        function updateWorkSummary() {
-            const totalWorks = currentWorks.length;
-            const totalHours = currentWorks.reduce((sum, work) => sum + work.hours, 0);
-            const totalQuantity = currentWorks.reduce((sum, work) => sum + work.quantity, 0);
-            const totalCost = currentWorks.reduce((sum, work) => sum + work.totalCost, 0);
-            
-            document.getElementById('totalWorksCount').textContent = totalWorks;
-            document.getElementById('totalWorksHours').textContent = totalHours.toFixed(1);
-            document.getElementById('totalWorksQuantity').textContent = totalQuantity.toFixed(2);
-            document.getElementById('totalWorksCost').textContent = totalCost.toFixed(2) + ' €';
-        }
-        
-        // RIMUOVI LAVORAZIONE
-        function removeWorkItem(workId) {
-            if (confirm('Eliminare questa lavorazione?')) {
-                currentWorks = currentWorks.filter(w => w.id !== workId);
-                updateWorksUI();
-                updateWorkSummary();
-            }
-        }
-        
-        // MODIFICA LAVORAZIONE
-        function editWorkItem(workId) {
-            const work = currentWorks.find(w => w.id === workId);
-            if (!work) return;
-            
-            // Popola form con dati lavorazione
-            const category = workCategories.find(c => c.name === work.category);
-            if (category) {
-                document.getElementById('newWorkCategory').value = category.id;
-                updateWorkSubcategories();
-                setTimeout(() => {
-                    document.getElementById('newWorkSubcategory').value = work.subcategory;
-                }, 100);
-            }
-            
-            document.getElementById('newWorkDescription').value = work.description;
-            document.getElementById('newWorkQuantity').value = work.quantity;
-            document.getElementById('newWorkUnit').value = work.unit;
-            document.getElementById('newWorkHours').value = work.hours;
-            document.getElementById('newWorkCost').value = work.costPerUnit;
-            document.getElementById('newWorkNotes').value = work.notes || '';
-            
-            // Seleziona performers
-            const performerSelect = document.getElementById('newWorkPerformer');
-            Array.from(performerSelect.options).forEach(option => {
-                const performerValue = work.performers.find(p => {
-                    if (p.type === 'worker') return `worker_${p.id}` === option.value;
-                    if (p.type === 'subcontractor') return `sub_${p.id}` === option.value;
-                    return false;
-                });
-                option.selected = !!performerValue;
-            });
-            
-            // Rimuovi lavorazione dalla lista
-            removeWorkItem(workId);
-            
-            // Scrolla al form
-            document.getElementById('worksSection').scrollIntoView({ behavior: 'smooth' });
-            document.getElementById('newWorkDescription').focus();
-        }
-        
-        // RESET FORM LAVORI
-        function resetWorkForm() {
+            // Reset form
             document.getElementById('newWorkDescription').value = '';
             document.getElementById('newWorkQuantity').value = 1;
-            document.getElementById('newWorkHours').value = 1;
+            document.getElementById('newWorkHours').value = 8;
             document.getElementById('newWorkCost').value = 0;
             document.getElementById('newWorkNotes').value = '';
             document.getElementById('newWorkPerformer').selectedIndex = -1;
+            
+            showAlert('Lavorazione aggiunta con successo!', 'success');
         }
         
-        // BIBLIOTECA TEMPLATES
-        function openWorkTemplates() {
-            const modalContent = document.getElementById('workTemplatesContent');
+        function updatePerformerSelect() {
+            const select = document.getElementById('newWorkPerformer');
+            select.innerHTML = '';
             
-            const categoriesHTML = workCategories.map(category => {
-                const catTemplates = workTemplates.filter(t => t.category === category.name);
-                
-                if (catTemplates.length === 0) return '';
-                
-                return `
-                    <div style="margin-bottom: 30px;">
-                        <h4 style="color: #1a3c8b; margin-bottom: 15px; border-bottom: 2px solid #eaeef5; padding-bottom: 8px;">
-                            ${category.icon || '📁'} ${category.name}
-                        </h4>
-                        <div class="template-library">
-                            ${catTemplates.map(template => `
-                                <div class="template-card" onclick="applyWorkTemplate(${template.id})">
-                                    <div class="template-title">${template.name}</div>
-                                    <div style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
-                                        ${template.subcategory || 'Generico'}
-                                    </div>
-                                    <div style="font-size: 0.85rem; color: #777;">
-                                        <div>📏 ${template.typicalQuantity || 1} ${template.unit || 'ore'}</div>
-                                        <div>⏱️ ${template.typicalHours || 0} ore</div>
-                                        <div>💰 ${template.typicalCost || 0} €/${template.unit || 'ore'}</div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            // Operai attivi
+            systemData.workers
+                .filter(w => w.active)
+                .forEach(worker => {
+                    const option = document.createElement('option');
+                    option.value = `worker_${worker.id}`;
+                    option.textContent = `👷 ${worker.name} (${worker.code})`;
+                    select.appendChild(option);
+                });
             
-            modalContent.innerHTML = `
-                <div style="margin-bottom: 20px;">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" id="searchTemplates" class="form-control" 
-                                   placeholder="🔍 Cerca template..." oninput="searchTemplates()">
-                        </div>
-                    </div>
-                </div>
-                
-                ${categoriesHTML || '<p style="text-align: center; padding: 40px; color: #666;">Nessun template disponibile</p>'}
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <button class="btn btn-primary" onclick="createNewTemplate()">
-                        ➕ Crea Nuovo Template
-                    </button>
-                </div>
-            `;
-            
-            openModal('workTemplatesModal');
+            // Subappaltatori attivi
+            systemData.subcontractors
+                .filter(s => s.active)
+                .forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = `sub_${sub.id}`;
+                    option.textContent = `🏢 ${sub.name}`;
+                    select.appendChild(option);
+                });
         }
         
-        // APPLICA TEMPLATE
-        function applyWorkTemplate(templateId) {
-            const template = workTemplates.find(t => t.id === templateId);
-            if (!template) return;
+        // RIEPILOGO
+        function updateReportSummary() {
+            const totalWorks = appState.currentWorks.length;
+            const totalHours = appState.currentWorks.reduce((sum, work) => sum + work.hours, 0);
+            const totalCost = appState.currentWorks.reduce((sum, work) => sum + work.totalCost, 0);
             
-            const category = workCategories.find(c => c.name === template.category);
+            // Operai coinvolti (unique)
+            const workerIds = new Set();
+            appState.currentWorks.forEach(work => {
+                work.performers.forEach(p => {
+                    if (p.type === 'worker') workerIds.add(p.id);
+                });
+            });
             
-            if (category) {
-                document.getElementById('newWorkCategory').value = category.id;
-                updateWorkSubcategories();
-                
-                setTimeout(() => {
-                    document.getElementById('newWorkSubcategory').value = template.subcategory || '';
-                }, 100);
-            }
+            document.getElementById('summaryWorks').textContent = totalWorks;
+            document.getElementById('summaryHours').textContent = totalHours;
+            document.getElementById('summaryWorkers').textContent = workerIds.size;
+            document.getElementById('summaryCost').textContent = formatCurrency(totalCost);
             
-            document.getElementById('newWorkDescription').value = template.name;
-            document.getElementById('newWorkQuantity').value = template.typicalQuantity || 1;
-            document.getElementById('newWorkUnit').value = template.unit || 'ore';
-            document.getElementById('newWorkHours').value = template.typicalHours || 1;
-            document.getElementById('newWorkCost').value = template.typicalCost || 0;
-            
-            closeModal('workTemplatesModal');
-            
-            // Scrolla al form
-            document.getElementById('newWorkDescription').focus();
-        }
-        
-        // SALVA COME TEMPLATE
-        function saveWorkTemplate() {
-            const categoryId = document.getElementById('newWorkCategory').value;
-            const subcategory = document.getElementById('newWorkSubcategory').value;
-            const description = document.getElementById('newWorkDescription').value.trim();
-            const quantity = parseFloat(document.getElementById('newWorkQuantity').value);
-            const unit = document.getElementById('newWorkUnit').value;
-            const hours = parseFloat(document.getElementById('newWorkHours').value);
-            const cost = parseFloat(document.getElementById('newWorkCost').value);
-            
-            if (!description) {
-                alert('Inserisci una descrizione per il template');
-                return;
-            }
-            
-            const category = workCategories.find(c => c.id == categoryId);
-            
-            const newTemplate = {
-                id: Date.now(),
-                name: description,
-                category: category ? category.name : '',
-                subcategory: subcategory,
-                unit: unit,
-                typicalQuantity: quantity,
-                typicalHours: hours,
-                typicalCost: cost,
-                createdAt: new Date().toISOString()
-            };
-            
-            workTemplates.push(newTemplate);
-            saveWorkTemplates();
-            
-            alert('✅ Template salvato con successo!');
-        }
-        
-        // GESTIONE CATEGORIE (modal)
-        function getWorkCategoriesManageContent() {
-            return `
-                <div style="margin-bottom: 25px;">
-                    <h4 style="color: #1a3c8b; margin-bottom: 15px;">Aggiungi Nuova Categoria</h4>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" id="newCategoryName" class="form-control" placeholder="Nome categoria">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="newCategoryIcon" class="form-control" placeholder="Icona (emoji)">
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-success" onclick="addNewWorkCategory()">
-                                ➕ Aggiungi
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 1;">
-                            <input type="text" id="newSubcategories" class="form-control" 
-                                   placeholder="Sottocategorie (separate da virgola)">
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 style="color: #1a3c8b; margin-bottom: 15px;">Categorie Esistenti</h4>
-                    ${workCategories.map(category => `
-                        <div class="item-card" style="margin-bottom: 15px;">
-                            <div class="item-info">
-                                <div class="item-title">${category.icon || '📁'} ${category.name}</div>
-                                <div class="item-details">
-                                    Sottocategorie: ${category.subcategories ? category.subcategories.join(', ') : 'Nessuna'}
-                                </div>
+            // Dettaglio lavorazioni
+            const summaryTable = document.getElementById('worksSummary');
+            summaryTable.innerHTML = appState.currentWorks.map(work => `
+                <tr>
+                    <td>
+                        <strong>${work.description}</strong>
+                        ${work.notes ? `<div style="font-size: 0.85rem; color: #7f8c8d;">${work.notes}</div>` : ''}
+                    </td>
+                    <td>${work.categoryName}</td>
+                    <td>${work.quantity} ${work.unit}</td>
+                    <td>${work.hours} ore</td>
+                    <td>
+                        ${work.performers.map(p => `
+                            <div style="font-size: 0.85rem;">
+                                ${p.type === 'worker' ? '👷' : '🏢'} ${p.name}
                             </div>
-                            <div class="item-actions">
-                                <button class="btn btn-sm btn-warning" onclick="editWorkCategory(${category.id})">
-                                    ✏️
-                                </button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteWorkCategory(${category.id})">
-                                    ❌
-                                </button>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-        
-        // AGGIUNGI NUOVA CATEGORIA
-        function addNewWorkCategory() {
-            const name = document.getElementById('newCategoryName').value.trim();
-            const icon = document.getElementById('newCategoryIcon').value.trim();
-            const subcategoriesInput = document.getElementById('newSubcategories').value.trim();
-            
-            if (!name) {
-                alert('Inserisci il nome della categoria');
-                return;
-            }
-            
-            const subcategories = subcategoriesInput ? 
-                subcategoriesInput.split(',').map(s => s.trim()).filter(s => s) : 
-                [];
-            
-            const newCategory = {
-                id: Date.now(),
-                name: name,
-                icon: icon || '📁',
-                subcategories: subcategories
-            };
-            
-            workCategories.push(newCategory);
-            saveWorkCategories();
-            
-            updateWorkCategorySelect();
-            updateWorkCategoriesUI();
-            
-            // Reset form
-            document.getElementById('newCategoryName').value = '';
-            document.getElementById('newCategoryIcon').value = '';
-            document.getElementById('newSubcategories').value = '';
-            
-            showAlert('✅ Categoria aggiunta con successo!', 'success');
-        }
-        
-        // AGGIORNA UI CATEGORIE
-        function updateWorkCategoriesUI() {
-            const container = document.getElementById('workCategoriesContainer');
-            // Viene chiamato da updateWorksUI()
-        }
-        
-        // QUICK WORK BUTTONS
-        function updateQuickWorkButtons() {
-            const container = document.getElementById('quickWorksButtons');
-            if (!container) return;
-            
-            // Lavori comuni
-            const commonWorks = [
-                { name: "Scavo manuale", cat: "Scavi e Fondazioni", sub: "Scavo manuale", hours: 8, qty: 10, unit: "m3" },
-                { name: "Getto calcestruzzo", cat: "Strutture in Cemento", sub: "Getti", hours: 8, qty: 20, unit: "m3" },
-                { name: "Muratura tramezzi", cat: "Murature", sub: "Tramezzi", hours: 8, qty: 15, unit: "m2" },
-                { name: "Posa impianto elettrico", cat: "Impianti", sub: "Elettrico", hours: 8, qty: 100, unit: "ml" },
-                { name: "Pittura pareti", cat: "Finitura Interna", sub: "Pittura", hours: 8, qty: 50, unit: "m2" }
-            ];
-            
-            container.innerHTML = commonWorks.map(work => `
-                <button class="quick-work-btn" onclick="addQuickWork('${work.name}', '${work.cat}', '${work.sub}', ${work.hours}, ${work.qty}, '${work.unit}')">
-                    ${work.name}
-                </button>
+                        `).join('')}
+                    </td>
+                    <td><strong style="color: #43e97b;">${formatCurrency(work.totalCost)}</strong></td>
+                </tr>
             `).join('');
         }
         
-        // AGGIUNGI LAVORO RAPIDO
-        function addQuickWork(name, categoryName, subcategory, hours, quantity, unit) {
-            const category = workCategories.find(c => c.name === categoryName);
+        // SALVA RAPPORTINO
+        function saveReport() {
+            const date = document.getElementById('reportDate').value;
+            const siteId = document.getElementById('reportSite').value;
+            const weather = document.getElementById('reportWeather').value;
+            const notes = document.getElementById('reportNotes').value.trim();
             
-            if (category) {
-                document.getElementById('newWorkCategory').value = category.id;
-                updateWorkSubcategories();
-                
-                setTimeout(() => {
-                    document.getElementById('newWorkSubcategory').value = subcategory;
-                }, 100);
+            // Validazioni finali
+            if (!date || !siteId) {
+                showAlert('Compila tutti i campi obbligatori', 'error');
+                return;
             }
             
-            document.getElementById('newWorkDescription').value = name;
-            document.getElementById('newWorkHours').value = hours;
-            document.getElementById('newWorkQuantity').value = quantity;
-            document.getElementById('newWorkUnit').value = unit;
-            
-            // Focus sul campo successivo
-            document.getElementById('newWorkPerformer').focus();
-        }
-        
-        // INTEGRAZIONE NEL SALVATAGGIO RAPPORTINO
-        function saveReport() {
-            // ... codice esistente ...
-            
-            // Aggiungi le lavorazioni al rapportino
-            const report = {
-                // ... campi esistenti ...
-                works: [...currentWorks], // AGGIUNGI QUESTO
-                totals: {
-                    // ... totali esistenti ...
-                    worksHours: currentWorks.reduce((sum, w) => sum + w.hours, 0),
-                    worksCost: currentWorks.reduce((sum, w) => sum + w.totalCost, 0),
-                    worksCount: currentWorks.length
-                }
-            };
-            
-            // ... resto del codice ...
-        }
-        
-        // SALVA DATI LAVORI
-        function saveWorkCategories() {
-            localStorage.setItem('cantiereWorkCategories', JSON.stringify(workCategories));
-        }
-        
-        function saveWorkTemplates() {
-            localStorage.setItem('cantiereWorkTemplates', JSON.stringify(workTemplates));
-        }
-        
-        // ALERT PERSONALIZZATO
-        function showAlert(message, type = 'info', elementId = 'worksAlert') {
-            const alertElement = document.getElementById(elementId);
-            if (alertElement) {
-                alertElement.className = `alert alert-${type}`;
-                alertElement.querySelector('.alert-icon').textContent = 
-                    type === 'success' ? '✅' : 
-                    type === 'warning' ? '⚠️' : 
-                    type === 'danger' ? '❌' : 'ℹ️';
-                alertElement.querySelector('span:last-child').textContent = message;
-                alertElement.style.display = 'flex';
-                
-                setTimeout(() => {
-                    if (type !== 'info') {
-                        alertElement.style.display = 'none';
-                    }
-                }, 3000);
+            const site = systemData.sites.find(s => s.id == siteId);
+            if (!site) {
+                showAlert('Cantiere non trovato', 'error');
+                return;
             }
-        }
-        
-        // MODIFICA SAVE REPORT PER INCLUDERE LAVORAZIONI
-        function saveReport() {
-            // ... validazioni esistenti ...
             
-            // Aggiungi validazione lavorazioni se necessario
-            // if (currentWorks.length === 0 && confirm('Non hai aggiunto lavorazioni. Continuare?')) {
-            //     // continua senza lavorazioni
-            // }
+            // Calcola totali
+            const totalHours = appState.currentWorks.reduce((sum, work) => sum + work.hours, 0);
+            const totalCost = appState.currentWorks.reduce((sum, work) => sum + work.totalCost, 0);
             
+            // Crea rapportino
             const report = {
-                // ... campi esistenti ...
                 id: Date.now(),
-                date: document.getElementById('reportDate').value,
-                siteId: document.getElementById('reportSite').value,
-                siteName: sites.find(s => s.id == document.getElementById('reportSite').value)?.name || '',
-                // ... altri campi ...
-                
-                // NUOVI CAMPI LAVORAZIONI
-                works: JSON.parse(JSON.stringify(currentWorks)), // deep copy
-                
-                totals: {
-                    // ... totali esistenti ...
-                    workerHours: currentReport.workers.reduce((sum, w) => sum + w.hours, 0),
-                    equipmentHours: currentReport.equipment.reduce((sum, e) => sum + e.hours, 0),
-                    subcontractorHours: currentReport.subcontractors.reduce((sum, s) => sum + (s.hours || 0), 0),
-                    subcontractorCost: currentReport.subcontractors.reduce((sum, s) => sum + s.cost, 0),
-                    
-                    // TOTALI LAVORAZIONI
-                    worksHours: currentWorks.reduce((sum, w) => sum + w.hours, 0),
-                    worksCost: currentWorks.reduce((sum, w) => sum + w.totalCost, 0),
-                    worksCount: currentWorks.length,
-                    
-                    // TOTALE GENERALE
-                    totalHours: currentReport.workers.reduce((sum, w) => sum + w.hours, 0) +
-                              currentReport.equipment.reduce((sum, e) => sum + e.hours, 0) +
-                              currentReport.subcontractors.reduce((sum, s) => sum + (s.hours || 0), 0) +
-                              currentWorks.reduce((sum, w) => sum + w.hours, 0),
-                    
-                    totalCost: currentReport.subcontractors.reduce((sum, s) => sum + s.cost, 0) +
-                              currentWorks.reduce((sum, w) => sum + w.totalCost, 0)
-                }
+                date: date,
+                siteId: siteId,
+                siteName: site.name,
+                siteAddress: site.address,
+                siteCity: site.city,
+                userId: systemData.currentUser.id,
+                userName: systemData.currentUser.name,
+                weather: weather,
+                notes: notes,
+                works: [...appState.currentWorks],
+                totalHours: totalHours,
+                totalCost: totalCost,
+                status: 'completed',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
             };
             
-            // ... resto del salvataggio ...
+            // Aggiungi al sistema
+            systemData.reports.push(report);
             
-            // Resetta anche le lavorazioni
-            currentWorks = [];
-            updateWorksUI();
-            updateWorkSummary();
+            // Salva
+            saveAllData();
+            
+            // Reset e torna alla dashboard
+            resetReport();
+            navigateTo('dashboard');
+            
+            showAlert('Rapportino salvato con successo!', 'success');
         }
         
-        // INIZIALIZZAZIONE COMPLETA
-        document.addEventListener('DOMContentLoaded', function() {
-            loadAllData();
+        function saveDraft() {
+            const date = document.getElementById('reportDate').value;
+            const siteId = document.getElementById('reportSite').value;
             
-            // Carica anche i dati lavori
-            loadWorksData();
+            if (!date || !siteId) {
+                showAlert('Inserisci almeno data e cantiere per salvare la bozza', 'error');
+                return;
+            }
             
-            checkAutoLogin();
-            initDate();
-        });
+            const site = systemData.sites.find(s => s.id == siteId);
+            const draft = {
+                id: Date.now(),
+                date: date,
+                siteId: siteId,
+                siteName: site ? site.name : '',
+                weather: document.getElementById('reportWeather').value,
+                notes: document.getElementById('reportNotes').value,
+                works: [...appState.currentWorks],
+                savedAt: new Date().toISOString()
+            };
+            
+            systemData.drafts.push(draft);
+            saveAllData();
+            
+            showAlert('Bozza salvata con successo!', 'success');
+        }
+        
+        function resetReport() {
+            // Reset form
+            document.getElementById('reportDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('reportSite').selectedIndex = 0;
+            document.getElementById('reportWeather').selectedIndex = 0;
+            document.getElementById('reportNotes').value = '';
+            
+            // Reset lavorazioni
+            appState.currentWorks = [];
+            appState.currentStep = 1;
+            
+            // Reset UI
+            loadWorkCategoriesForReport();
+            updateProgressSteps();
+        }
+        
+        // GESTIONE LAVORAZIONI (PAGINA)
+        function loadWorkCategories() {
+            const container = document.getElementById('manageWorkCategories');
+            container.innerHTML = '';
+            
+            systemData.workCategories.forEach(category => {
+                const categoryTemplates = systemData.workTemplates.filter(t => t.categoryId === category.id);
+                
+                const card = document.createElement('div');
+                card.className = 'work-category-card';
+                card.innerHTML = `
+                    <div class="category-header" style="background: linear-gradient(135deg, ${category.color}99 0%, ${category.color} 100%);">
+                        <div class="category-icon">${category.icon}</div>
+                        <div class="category-title">
+                            <h3>${category.name}</h3>
+                            <div class="category-count">${categoryTemplates.length} template</div>
+                        </div>
+                        <button class="btn btn-icon btn-outline" onclick="editWorkCategory(${category.id})" style="background: rgba(255, 255, 255, 0.2);">
+                            ✏️
+                        </button>
+                    </div>
+                    <div class="category-body">
+                        <div style="margin-bottom: 15px; color: #7f8c8d; font-size: 0.9rem;">
+                            Sottocategorie: ${category.subcategories.join(', ')}
+                        </div>
+                        ${categoryTemplates.length > 0 ? `
+                            <div style="font-size: 0.9rem;">
+                                <strong>Template disponibili:</strong>
+                                ${categoryTemplates.map(t => `
+                                    <div style="margin-top: 8px; padding: 8px; background: #f8fafc; border-radius: 8px;">
+                                        ${t.name} (${t.typicalQuantity} ${t.unit})
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : `
+                            <div style="text-align: center; padding: 20px; color: #7f8c8d;">
+                                Nessun template in questa categoria
+                            </div>
+                        `}
+                        <div style="margin-top: 20px; text-align: center;">
+                            <button class="btn btn-sm btn-primary" onclick="addWorkTemplateToCategory(${category.id})">
+                                ➕ Nuovo Template
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            
+            // Aggiungi card per nuova categoria
+            const addCard = document.createElement('div');
+            addCard.className = 'work-category-card';
+            addCard.innerHTML = `
+                <div style="padding: 40px; text-align: center; cursor: pointer;" onclick="addWorkCategory()">
+                    <div style="font-size: 3rem; color: #7f8c8d; margin-bottom: 15px;">+</div>
+                    <div style="color: #7f8c8d; font-size: 1.1rem;">Aggiungi Categoria</div>
+                </div>
+            `;
+            container.appendChild(addCard);
+        }
+        
+        function loadWorkTemplates() {
+            const container = document.getElementById('workTemplatesList');
+            const templates = systemData.workTemplates.filter(t => t.active);
+            
+            if (templates.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #7f8c8d;">
+                            Nessun template disponibile
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            container.innerHTML = templates.map(template => {
+                const category = systemData.workCategories.find(c => c.id === template.categoryId);
+                return `
+                    <tr>
+                        <td>
+                            <strong>${template.name}</strong>
+                            ${template.description ? `<div style="font-size: 0.85rem; color: #7f8c8d;">${template.description}</div>` : ''}
+                        </td>
+                        <td>
+                            ${category ? `${category.icon} ${category.name}` : '-'}
+                            ${template.subcategory ? `<div style="font-size: 0.85rem; color: #7f8c8d;">${template.subcategory}</div>` : ''}
+                        </td>
+                        <td>${template.typicalQuantity} ${template.unit}</td>
+                        <td>${template.typicalHours} ore</td>
+                        <td>${formatCurrency(template.typicalCost)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline" onclick="editWorkTemplate(${template.id})">
+                                ✏️
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteWorkTemplate(${template.id})">
+                                ❌
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // GESTIONE OPERAI
+        function loadWorkers() {
+            const container = document.getElementById('workersList');
+            const activeWorkers = systemData.workers.filter(w => w.active);
+            
+            document.getElementById('activeWorkersCount').textContent = `${activeWorkers.length} attivi`;
+            
+            if (activeWorkers.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #7f8c8d;">
+                            <div class="empty-state">
+                                <div class="empty-icon">👷</div>
+                                <p>Nessun operaio registrato</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            container.innerHTML = activeWorkers.map(worker => `
+                <tr>
+                    <td>
+                        <strong>${worker.name}</strong>
+                        ${worker.specialty ? `<div style="font-size: 0.85rem; color: #7f8c8d;">${worker.specialty}</div>` : ''}
+                    </td>
+                    <td><code>${worker.code}</code></td>
+                    <td>${worker.specialty || '-'}</td>
+                    <td>
+                        <span class="status-badge status-completed">
+                            ${worker.active ? 'Attivo' : 'Inattivo'}
+                        </span>
+                    </td>
+                    <td>${formatDate(worker.createdAt)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline" onclick="toggleWorkerStatus(${worker.id})">
+                            ${worker.active ? '❌ Disattiva' : '✅ Attiva'}
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function addWorker() {
+            const name = document.getElementById('newWorkerName').value.trim();
+            const code = document.getElementById('newWorkerCode').value.trim();
+            const specialty = document.getElementById('newWorkerSpecialty').value.trim();
+            
+            if (!name || !code) {
+                showAlert('Inserisci nome e codice operaio', 'error');
+                return;
+            }
+            
+            const newWorker = {
+                id: Date.now(),
+                name: name,
+                code: code,
+                specialty: specialty,
+                active: true,
+                createdAt: new Date().toISOString()
+            };
+            
+            systemData.workers.push(newWorker);
+            saveAllData();
+            loadWorkers();
+            
+            // Reset form
+            document.getElementById('newWorkerName').value = '';
+            document.getElementById('newWorkerCode').value = '';
+            document.getElementById('newWorkerSpecialty').value = '';
+            
+            showAlert('Operaio aggiunto con successo!', 'success');
+        }
+        
+        // GESTIONE MEZZI
+        function loadEquipment() {
+            const container = document.getElementById('equipmentList');
+            const activeEquipment = systemData.equipment.filter(e => e.active);
+            
+            document.getElementById('activeEquipmentCount').textContent = `${activeEquipment.length} attivi`;
+            
+            if (activeEquipment.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #7f8c8d;">
+                            <div class="empty-state">
+                                <div class="empty-icon">🚜</div>
+                                <p>Nessun mezzo registrato</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            container.innerHTML = activeEquipment.map(eq => `
+                <tr>
+                    <td>
+                        <strong>${eq.name}</strong>
+                        <div style="font-size: 0.85rem; color: #7f8c8d;">${eq.type}</div>
+                    </td>
+                    <td>${eq.type}</td>
+                    <td>${eq.plate || '-'}</td>
+                    <td>
+                        <span class="status-badge status-completed">
+                            ${eq.active ? 'Attivo' : 'Inattivo'}
+                        </span>
+                    </td>
+                    <td>${formatDate(eq.createdAt)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline" onclick="toggleEquipmentStatus(${eq.id})">
+                            ${eq.active ? '❌ Disattiva' : '✅ Attiva'}
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function addEquipment() {
+            const name = document.getElementById('newEquipmentName').value.trim();
+            const type = document.getElementById('newEquipmentType').value;
+            const plate = document.getElementById('newEquipmentPlate').value.trim();
+            
+            if (!name || !type) {
+                showAlert('Inserisci nome e tipo del mezzo', 'error');
+                return;
+            }
+            
+            const newEquipment = {
+                id: Date.now(),
+                name: name,
+                type: type,
+                plate: plate,
+                active: true,
+                createdAt: new Date().toISOString()
+            };
+            
+            systemData.equipment.push(newEquipment);
+            saveAllData();
+            loadEquipment();
+            
+            // Reset form
+            document.getElementById('newEquipmentName').value = '';
+            document.getElementById('newEquipmentType').selectedIndex = 0;
+            document.getElementById('newEquipmentPlate').value = '';
+            
+            showAlert('Mezzo aggiunto con successo!', 'success');
+        }
+        
+        // GESTIONE SUBAPPALTATORI
+        function loadSubcontractors() {
+            const container = document.getElementById('subcontractorsList');
+            const activeSubs = systemData.subcontractors.filter(s => s.active);
+            
+            document.getElementById('activeSubcontractorsCount').textContent = `${activeSubs.length} attivi`;
+            
+            if (activeSubs.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #7f8c8d;">
+                            <div class="empty-state">
+                                <div class="empty-icon">🏢</div>
+                                <p>Nessun subappaltatore registrato</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            container.innerHTML = activeSubs.map(sub => `
+                <tr>
+                    <td>
+                        <strong>${sub.name}</strong>
+                        ${sub.specialty ? `<div style="font-size: 0.85rem; color: #7f8c8d;">${sub.specialty}</div>` : ''}
+                    </td>
+                    <td>${sub.piva}</td>
+                    <td>${sub.specialty || '-'}</td>
+                    <td>
+                        <span class="status-badge status-completed">
+                            ${sub.active ? 'Attivo' : 'Inattivo'}
+                        </span>
+                    </td>
+                    <td>${formatDate(sub.createdAt)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline" onclick="toggleSubcontractorStatus(${sub.id})">
+                            ${sub.active ? '❌ Disattiva' : '✅ Attiva'}
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function addSubcontractor() {
+            const name = document.getElementById('newSubcontractorName').value.trim();
+            const piva = document.getElementById('newSubcontractorPiva').value.trim();
+            const specialty = document.getElementById('newSubcontractorSpecialty').value.trim();
+            
+            if (!name || !piva) {
+                showAlert('Inserisci ragione sociale e P.IVA', 'error');
+                return;
+            }
+            
+            const newSubcontractor = {
+                id: Date.now(),
+                name: name,
+                piva: piva,
+                specialty: specialty,
+                active: true,
+                createdAt: new Date().toISOString()
+            };
+            
+            systemData.subcontractors.push(newSubcontractor);
+            saveAllData();
+            loadSubcontractors();
+            
+            // Reset form
+            document.getElementById('newSubcontractorName').value = '';
+            document.getElementById('newSubcontractorPiva').value = '';
+            document.getElementById('newSubcontractorSpecialty').value = '';
+            
+            showAlert('Subappaltatore aggiunto con successo!', 'success');
+        }
+        
+        // ARCHIVIO RAPPORTINI
+        function loadReports() {
+            const container = document.getElementById('allReportsList');
+            const filterSite = document.getElementById('filterSite');
+            
+            // Popola filtro cantieri
+            filterSite.innerHTML = '<option value="">Tutti i cantieri</option>';
+            const uniqueSites = [...new Set(systemData.reports.map(r => r.siteName))];
+            uniqueSites.forEach(site => {
+                filterSite.innerHTML += `<option value="${site}">${site}</option>`;
+            });
+            
+            filterReports();
+        }
+        
+        function filterReports() {
+            const container = document.getElementById('allReportsList');
+            const dateFrom = document.getElementById('filterDateFrom').value;
+            const dateTo = document.getElementById('filterDateTo').value;
+            const site = document.getElementById('filterSite').value;
+            
+            let filtered = systemData.reports;
+            
+            if (dateFrom) {
+                filtered = filtered.filter(r => r.date >= dateFrom);
+            }
+            
+            if (dateTo) {
+                filtered = filtered.filter(r => r.date <= dateTo);
+            }
+            
+            if (site) {
+                filtered = filtered.filter(r => r.siteName === site);
+            }
+            
+            // Ordina per data (più recente prima)
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #7f8c8d;">
+                            <div class="empty-state">
+                                <div class="empty-icon">📊</div>
+                                <p>Nessun rapportino trovato</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filtered.map(report => `
+                <tr>
+                    <td><strong>${formatDate(report.date)}</strong></td>
+                    <td>
+                        <strong>${report.siteName}</strong>
+                        <div style="font-size: 0.85rem; color: #7f8c8d;">
+                            ${report.siteCity || ''}
+                        </div>
+                    </td>
+                    <td>${report.works?.length || 0} lavori</td>
+                    <td>${report.totalHours || 0} ore</td>
+                    <td><strong style="color: #43e97b;">${formatCurrency(report.totalCost || 0)}</strong></td>
+                    <td>
+                        <span class="status-badge ${report.status === 'completed' ? 'status-completed' : 'status-draft'}">
+                            ${report.status === 'completed' ? 'Completato' : 'Bozza'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline" onclick="viewReport(${report.id})">
+                            👁️ Dettagli
+                        </button>
+                        <button class="btn btn-sm btn-outline" onclick="exportReport(${report.id})">
+                            📄 PDF
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function viewReport(reportId) {
+            const report = systemData.reports.find(r => r.id === reportId);
+            if (!report) return;
+            
+            document.getElementById('viewReportTitle').textContent = `Rapportino - ${formatDate(report.date)}`;
+            
+            const content = document.getElementById('viewReportContent');
+            content.innerHTML = `
+                <div style="margin-bottom: 30px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px;">
+                        <div style="padding: 20px; background: #f8fafc; border-radius: 12px;">
+                            <div style="font-size: 0.9rem; color: #7f8c8d; margin-bottom: 5px;">Data</div>
+                            <div style="font-size: 1.2rem; font-weight: 600;">${formatDate(report.date)}</div>
+                        </div>
+                        
+                        <div style="padding: 20px; background: #f8fafc; border-radius: 12px;">
+                            <div style="font-size: 0.9rem; color: #7f8c8d; margin-bottom: 5px;">Cantiere</div>
+                            <div style="font-size: 1.2rem; font-weight: 600;">${report.siteName}</div>
+                            <div style="font-size: 0.9rem; color: #7f8c8d;">${report.siteAddress || ''}</div>
+                        </div>
+                        
+                        <div style="padding: 20px; background: #f8fafc; border-radius: 12px;">
+                            <div style="font-size: 0.9rem; color: #7f8c8d; margin-bottom: 5px;">Capocantiere</div>
+                            <div style="font-size: 1.2rem; font-weight: 600;">${report.userName}</div>
+                        </div>
+                    </div>
+                    
+                    ${report.weather ? `
+                        <div style="padding: 15px; background: #f0f5ff; border-radius: 8px; margin-bottom: 20px;">
+                            <strong>🌤️ Condizioni meteo:</strong> ${getWeatherText(report.weather)}
+                        </div>
+                    ` : ''}
+                    
+                    ${report.notes ? `
+                        <div style="padding: 15px; background: #f8fafc; border-radius: 8px; margin-bottom: 20px;">
+                            <strong>📝 Note:</strong> ${report.notes}
+                        </div>
+                    ` : ''}
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #2c3e50; margin-bottom: 20px; font-size: 1.3rem;">🔨 Lavorazioni Eseguite</h3>
+                    
+                    ${report.works && report.works.length > 0 ? `
+                        <div class="table-container" style="margin-bottom: 0;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Lavorazione</th>
+                                        <th>Categoria</th>
+                                        <th>Quantità</th>
+                                        <th>Ore</th>
+                                        <th>Eseguito Da</th>
+                                        <th>Costo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${report.works.map(work => `
+                                        <tr>
+                                            <td>
+                                                <strong>${work.description}</strong>
+                                                ${work.notes ? `<div style="font-size: 0.85rem; color: #7f8c8d;">${work.notes}</div>` : ''}
+                                            </td>
+                                            <td>${work.categoryName}</td>
+                                            <td>${work.quantity} ${work.unit}</td>
+                                            <td>${work.hours} ore</td>
+                                            <td>
+                                                ${work.performers.map(p => `
+                                                    <div style="font-size: 0.85rem;">
+                                                        ${p.type === 'worker' ? '👷' : '🏢'} ${p.name}
+                                                    </div>
+                                                `).join('')}
+                                            </td>
+                                            <td><strong style="color: #43e97b;">${formatCurrency(work.totalCost)}</strong></td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                                <tfoot>
+                                    <tr style="background: #f8fafc;">
+                                        <td colspan="3"><strong>Totale</strong></td>
+                                        <td><strong>${report.totalHours || 0} ore</strong></td>
+                                        <td></td>
+                                        <td><strong style="color: #43e97b;">${formatCurrency(report.totalCost || 0)}</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    ` : `
+                        <div style="text-align: center; padding: 40px; color: #7f8c8d;">
+                            Nessuna lavorazione registrata
+                        </div>
+                    `}
+                </div>
+                
+                <div style="padding: 20px; background: linear-gradient(135deg, #f8fafc 0%, #f0f5ff 100%); border-radius: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 0.9rem; color: #7f8c8d;">Creato il</div>
+                            <div>${formatDateTime(report.createdAt)}</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="exportReport(${report.id})">
+                            📄 Esporta PDF
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            openModal('viewReportModal');
+        }
+        
+        // IMPOSTAZIONI
+        function loadSettings() {
+            // Data installazione
+            document.getElementById('installDate').textContent = formatDate(systemData.settings.installDate);
+            
+            // Dimensione dati
+            const dataSize = JSON.stringify(systemData).length;
+            document.getElementById('totalDataSize').textContent = formatBytes(dataSize);
+            
+            // Categorie lavori per settings
+            loadSettingsWorkCategories();
+        }
+        
+        function loadSettingsWorkCategories() {
+            const container = document.getElementById('settingsWorkCategories');
+            container.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="addWorkCategory()">
+                        ➕ Nuova Categoria
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Icona</th>
+                                <th>Sottocategorie</th>
+                                <th>Template</th>
+                                <th>Stato</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${systemData.workCategories.map(category => {
+                                const templates = systemData.workTemplates.filter(t => t.categoryId === category.id);
+                                return `
+                                    <tr>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <div style="font-size: 1.5rem;">${category.icon}</div>
+                                                <div>
+                                                    <strong>${category.name}</strong>
+                                                    <div style="font-size: 0.85rem; color: #7f8c8d;">
+                                                        Colore: <span style="color: ${category.color}">${category.color}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>${category.icon}</td>
+                                        <td>${category.subcategories.join(', ')}</td>
+                                        <td>${templates.length}</td>
+                                        <td>
+                                            <span class="status-badge ${category.active ? 'status-completed' : 'status-draft'}">
+                                                ${category.active ? 'Attiva' : 'Inattiva'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="editWorkCategory(${category.id})">
+                                                ✏️
+                                            </button>
+                                            <button class="btn btn-sm btn-outline" onclick="toggleWorkCategoryStatus(${category.id})">
+                                                ${category.active ? '❌' : '✅'}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+        
+        // CATEGORIE LAVORI (MODAL)
+        function addWorkCategory() {
+            appState.editingWorkCategory = null;
+            
+            document.getElementById('categoryName').value = '';
+            document.getElementById('categoryIcon').value = '🏗️';
+            document.getElementById('categoryColor').value = '#667eea';
+            document.getElementById('categorySubcategories').value = '';
+            
+            openModal('workCategoryModal');
+        }
+        
+        function editWorkCategory(categoryId) {
+            const category = systemData.workCategories.find(c => c.id === categoryId);
+            if (!category) return;
+            
+            appState.editingWorkCategory = categoryId;
+            
+            document.getElementById('categoryName').value = category.name;
+            document.getElementById('categoryIcon').value = category.icon;
+            document.getElementById('categoryColor').value = category.color;
+            document.getElementById('categorySubcategories').value = category.subcategories.join(', ');
+            
+            openModal('workCategoryModal');
+        }
+        
+        function saveWorkCategory() {
+            const name = document.getElementById('categoryName').value.trim();
+            const icon = document.getElementById('categoryIcon').value;
+            const color = document.getElementById('categoryColor').value;
+            const subcategories = document.getElementById('categorySubcategories').value
+                .split(',')
+                .map(s => s.trim())
+                .filter(s => s);
+            
+            if (!name) {
+                showAlert('Inserisci il nome della categoria', 'error');
+                return;
+            }
+            
+            if (appState.editingWorkCategory) {
+                // Modifica categoria esistente
+                const category = systemData.workCategories.find(c => c.id === appState.editingWorkCategory);
+                if (category) {
+                    category.name = name;
+                    category.icon = icon;
+                    category.color = color;
+                    category.subcategories = subcategories;
+                }
+            } else {
+                // Nuova categoria
+                const newCategory = {
+                    id: Date.now(),
+                    name: name,
+                    icon: icon,
+                    color: color,
+                    subcategories: subcategories,
+                    active: true
+                };
+                
+                systemData.workCategories.push(newCategory);
+            }
+            
+            saveAllData();
+            closeModal('workCategoryModal');
+            
+            // Ricarica le pagine interessate
+            loadWorkCategories();
+            loadSettingsWorkCategories();
+            
+            showAlert('Categoria salvata con successo!', 'success');
+        }
+        
+        // TEMPLATE LAVORI (MODAL)
+        function addWorkTemplateToCategory(categoryId) {
+            const category = systemData.workCategories.find(c => c.id === categoryId);
+            if (!category) return;
+            
+            appState.editingTemplate = null;
+            
+            document.getElementById('templateName').value = '';
+            document.getElementById('templateCategory').value = categoryId;
+            document.getElementById('templateUnit').value = 'ore';
+            document.getElementById('templateQuantity').value = 1;
+            document.getElementById('templateHours').value = 8;
+            document.getElementById('templateCost').value = 0;
+            document.getElementById('templateDescription').value = '';
+            
+            // Popola select categorie
+            const categorySelect = document.getElementById('templateCategory');
+            categorySelect.innerHTML = '';
+            systemData.workCategories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.id;
+                option.textContent = `${cat.icon} ${cat.name}`;
+                option.selected = cat.id === categoryId;
+                categorySelect.appendChild(option);
+            });
+            
+            openModal('workTemplateModal');
+        }
+        
+        function saveWorkTemplateModal() {
+            const name = document.getElementById('templateName').value.trim();
+            const categoryId = document.getElementById('templateCategory').value;
+            const unit = document.getElementById('templateUnit').value;
+            const quantity = parseFloat(document.getElementById('templateQuantity').value);
+            const hours = parseFloat(document.getElementById('templateHours').value);
+            const cost = parseFloat(document.getElementById('templateCost').value);
+            const description = document.getElementById('templateDescription').value.trim();
+            
+            if (!name || !categoryId) {
+                showAlert('Inserisci nome e categoria del template', 'error');
+                return;
+            }
+            
+            const category = systemData.workCategories.find(c => c.id == categoryId);
+            
+            if (appState.editingTemplate) {
+                // Modifica template esistente
+                const template = systemData.workTemplates.find(t => t.id === appState.editingTemplate);
+                if (template) {
+                    template.name = name;
+                    template.categoryId = categoryId;
+                    template.categoryName = category ? category.name : '';
+                    template.unit = unit;
+                    template.typicalQuantity = quantity;
+                    template.typicalHours = hours;
+                    template.typicalCost = cost;
+                    template.description = description;
+                }
+            } else {
+                // Nuovo template
+                const newTemplate = {
+                    id: Date.now(),
+                    name: name,
+                    categoryId: categoryId,
+                    categoryName: category ? category.name : '',
+                    unit: unit,
+                    typicalQuantity: quantity,
+                    typicalHours: hours,
+                    typicalCost: cost,
+                    description: description,
+                    active: true
+                };
+                
+                systemData.workTemplates.push(newTemplate);
+            }
+            
+            saveAllData();
+            closeModal('workTemplateModal');
+            
+            // Ricarica le pagine interessate
+            loadWorkTemplates();
+            loadWorkCategories();
+            
+            showAlert('Template salvato con successo!', 'success');
+        }
+        
+        // BACKUP E RIPRISTINO
+        function createBackup() {
+            const dataStr = JSON.stringify(systemData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `cantiere_backup_${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showAlert('Backup creato con successo!', 'success');
+        }
+        
+        function restoreBackup() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = event => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        
+                        if (confirm('Vuoi ripristinare questo backup? I dati attuali verranno sovrascritti.')) {
+                            systemData = data;
+                            saveAllData();
+                            initApp();
+                            showAlert('Backup ripristinato con successo!', 'success');
+                        }
+                    } catch (error) {
+                        showAlert('Errore nel file di backup: ' + error.message, 'error');
+                    }
+                };
+                
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+        
+        // UTILITY FUNCTIONS
+        function saveAllData() {
+            localStorage.setItem('cantiereProData', JSON.stringify(systemData));
+        }
+        
+        function updateUserInfo() {
+            document.getElementById('userName').textContent = systemData.currentUser.name;
+            document.getElementById('userAvatar').textContent = systemData.currentUser.role === 'admin' ? '👑' : '👷';
+        }
+        
+        function updateSelects() {
+            // Popola select cantieri
+            const siteSelect = document.getElementById('reportSite');
+            siteSelect.innerHTML = '<option value="">Seleziona cantiere...</option>';
+            systemData.sites.forEach(site => {
+                siteSelect.innerHTML += `<option value="${site.id}">${site.name} - ${site.city}</option>`;
+            });
+        }
+        
+        function updateLists() {
+            // Da implementare se necessario
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('it-IT', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+        
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('it-IT', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('it-IT', {
+                style: 'currency',
+                currency: 'EUR'
+            }).format(amount);
+        }
+        
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function getWeatherText(weather) {
+            const weatherMap = {
+                'sole': '☀️ Soleggiato',
+                'nuvoloso': '☁️ Nuvoloso',
+                'pioggia': '🌧️ Pioggia',
+                'neve': '❄️ Neve',
+                'vento': '💨 Ventoso'
+            };
+            return weatherMap[weather] || 'Non specificato';
+        }
+        
+        function showAlert(message, type = 'success') {
+            // Implementa un sistema di notifiche
+            alert(message);
+        }
+        
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        function logout() {
+            if (confirm('Sei sicuro di voler uscire?')) {
+                localStorage.removeItem('currentUser');
+                location.reload();
+            }
+        }
+        
+        function checkAutoLogin() {
+            // Implementa auto-login se necessario
+        }
+        
+        function showNotifications() {
+            showAlert('Funzionalità notifiche in sviluppo', 'info');
+        }
+        
+        function exportReports() {
+            showAlert('Funzionalità esportazione Excel in sviluppo', 'info');
+        }
+        
+        function exportReport(reportId) {
+            showAlert('Funzionalità esportazione PDF in sviluppo', 'info');
+        }
+        
+        // Funzioni toggle status
+        function toggleWorkerStatus(id) {
+            const worker = systemData.workers.find(w => w.id === id);
+            if (worker) {
+                worker.active = !worker.active;
+                saveAllData();
+                loadWorkers();
+            }
+        }
+        
+        function toggleEquipmentStatus(id) {
+            const eq = systemData.equipment.find(e => e.id === id);
+            if (eq) {
+                eq.active = !eq.active;
+                saveAllData();
+                loadEquipment();
+            }
+        }
+        
+        function toggleSubcontractorStatus(id) {
+            const sub = systemData.subcontractors.find(s => s.id === id);
+            if (sub) {
+                sub.active = !sub.active;
+                saveAllData();
+                loadSubcontractors();
+            }
+        }
+        
+        function toggleWorkCategoryStatus(id) {
+            const category = systemData.workCategories.find(c => c.id === id);
+            if (category) {
+                category.active = !category.active;
+                saveAllData();
+                loadSettingsWorkCategories();
+                loadWorkCategories();
+            }
+        }
     </script>
 </body>
 </html>
