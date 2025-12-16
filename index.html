@@ -980,7 +980,7 @@
                         
                         <div class="stat-card card-workers">
                             <div class="stat-icon">👷</div>
-                            <div class="stat-value" id="totalWorkers">0</div>
+                            <div class="stat-value" id="totalWorkers">35</div>
                             <div class="stat-label">Operai Attivi</div>
                             <div class="stat-change positive">
                                 <span>↑ 5%</span>
@@ -990,7 +990,7 @@
                         
                         <div class="stat-card card-equipment">
                             <div class="stat-icon">🚜</div>
-                            <div class="stat-value" id="totalEquipment">0</div>
+                            <div class="stat-value" id="totalEquipment">22</div>
                             <div class="stat-label">Mezzi Disponibili</div>
                             <div class="stat-change negative">
                                 <span>↓ 2%</span>
@@ -1336,7 +1336,7 @@
                             <div class="table-header">
                                 <div class="table-title">Operai Registrati</div>
                                 <div class="table-actions">
-                                    <span class="status-badge status-completed" id="activeWorkersCount">0 attivi</span>
+                                    <span class="status-badge status-completed" id="activeWorkersCount">35 attivi</span>
                                 </div>
                             </div>
                             <table>
@@ -1402,7 +1402,7 @@
                             <div class="table-header">
                                 <div class="table-title">Mezzi Disponibili</div>
                                 <div class="table-actions">
-                                    <span class="status-badge status-completed" id="activeEquipmentCount">0 attivi</span>
+                                    <span class="status-badge status-completed" id="activeEquipmentCount">22 attivi</span>
                                 </div>
                             </div>
                             <table>
@@ -1737,12 +1737,12 @@
     </div>
     
     <script>
-        // SISTEMA DATI COMPLETO
+        // SISTEMA DATI COMPLETO CON I TUOI DATI
         let systemData = {
             // Dati Utente
             currentUser: {
                 id: 1,
-                name: "Mario Rossi",
+                name: "FRANCESCO FURLAN",
                 role: "admin",
                 lastLogin: new Date().toISOString()
             },
@@ -1750,15 +1750,519 @@
             // Rapportini
             reports: [],
             
-            // Liste base
-            workers: [],
-            equipment: [],
-            subcontractors: [],
-            sites: [],
+            // LISTA OPERAI COMPLETA (35 operai)
+            workers: [
+                { id: 1, name: "FRANCESCO FURLAN", code: "ca1", specialty: "TITOLARE", active: true, createdAt: new Date().toISOString() },
+                { id: 2, name: "DANIELE POSSAMAI", code: "tc.01", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 3, name: "NICOLA LAVINA", code: "tc.02", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 4, name: "STANISLAO VENTURIN", code: "tc.03", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 5, name: "DAVID ACHAW", code: "tc.04", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 6, name: "ALESSANDRO TASINATO", code: "tc.05", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 7, name: "GIMMI TUIS", code: "tc.06", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 8, name: "ANDREA SCATTOLIN", code: "tc.07", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 9, name: "ALEXANDRE FORNASIER", code: "tc.08", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 10, name: "CLARA JORDA", code: "tc.09", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 11, name: "CLAUDIO LORENZONETTO", code: "tc.10", specialty: "TECNICO", active: true, createdAt: new Date().toISOString() },
+                { id: 12, name: "PAOLO POSSAMAI", code: "cc.01", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 13, name: "GIOVANNI MINEL", code: "cc.02", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 14, name: "RUDY MENEGHIN", code: "cc.03", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 15, name: "MIRCO TIVERON", code: "cc.04", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 16, name: "NICOLA TIVERON", code: "cc.05", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 17, name: "JASON MENEGHIN", code: "cc.06", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 18, name: "ANTONIO ROMANELLO", code: "cc.07", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 19, name: "MAURO BARBON", code: "cc.08", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 20, name: "DAVIDE BARBAGALLO", code: "cc.09", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 21, name: "DAVIS CAMPORESE", code: "cc.10", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 22, name: "ROBERTO GERETTO", code: "cc.11", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 23, name: "FRANCO BARBUIO", code: "cc.12", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 24, name: "ADRIANO TONON", code: "cc.13", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 25, name: "ROBERTO TREVISOL", code: "cc.14", specialty: "CAPOCANTIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 26, name: "SIMONE CONCOLATO", code: "gr.01", specialty: "GRUISTA", active: true, createdAt: new Date().toISOString() },
+                { id: 27, name: "VIDALI PAOLO", code: "gr.02", specialty: "GRUISTA", active: true, createdAt: new Date().toISOString() },
+                { id: 28, name: "MORRIS MORETTO", code: "mg.01", specialty: "MAGAZZINIERE", active: true, createdAt: new Date().toISOString() },
+                { id: 29, name: "DOMENICO GRASSO", code: "au.01", specialty: "AUTISTA", active: true, createdAt: new Date().toISOString() },
+                { id: 30, name: "ANDREA ZANATTA", code: "au.02", specialty: "AUTISTA", active: true, createdAt: new Date().toISOString() },
+                { id: 31, name: "MANUEL BUREI", code: "es.01", specialty: "OPERATORI MEZZI", active: true, createdAt: new Date().toISOString() },
+                { id: 32, name: "PUJA HASANI", code: "es.02", specialty: "OPERATORI MEZZI", active: true, createdAt: new Date().toISOString() },
+                { id: 33, name: "JASON MENEGHIN", code: "op.01", specialty: "OPERAIO", active: true, createdAt: new Date().toISOString() },
+                { id: 34, name: "LORIS BARBON", code: "op.02", specialty: "OPERAIO", active: true, createdAt: new Date().toISOString() },
+                { id: 35, name: "MARIUS DERJAI", code: "op.03", specialty: "OPERAIO", active: true, createdAt: new Date().toISOString() },
+                { id: 36, name: "PAULIN LLESHI", code: "op.04", specialty: "OPERAIO", active: true, createdAt: new Date().toISOString() },
+                { id: 37, name: "PAOLO VIDALI", code: "op.05", specialty: "OPERAIO", active: true, createdAt: new Date().toISOString() }
+            ],
             
-            // Sistema Lavorazioni
-            workCategories: [],
-            workTemplates: [],
+            // LISTA MEZZI COMPLETA (22 mezzi)
+            equipment: [
+                { id: 1, name: "Autocarro 3 ASSI", type: "Autocarro", plate: "a.01", active: true, dailyHours: 8, notes: "In ottime condizioni", createdAt: new Date().toISOString() },
+                { id: 2, name: "Autocarro 3 ASSI + GRU", type: "Autocarro", plate: "a.02", active: false, dailyHours: 8, notes: "Revisione annuale in corso", createdAt: new Date().toISOString() },
+                { id: 3, name: "Autocarro 3 ASSI + RIMORCHIO", type: "Autocarro", plate: "a.03", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 4, name: "Autocarro 4 ASSI", type: "Autocarro", plate: "a.04", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 5, name: "Autocarro SCANIA + V/P", type: "Autocarro", plate: "a.05", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 6, name: "Escavatore HITACHI 240/210", type: "Escavatore", plate: "e.01", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 7, name: "Escavatore HITACHI 240/210 + UT", type: "Escavatore", plate: "e.02", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 8, name: "Escavatore MINIPALA", type: "Escavatore", plate: "e.03", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 9, name: "Escavatore CAT 306", type: "Escavatore", plate: "e.04", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 10, name: "Escavatore CAT 306 +mar", type: "Escavatore", plate: "e.05", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 11, name: "Escavatore KUBOTA 18", type: "Escavatore", plate: "e.06", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 12, name: "Escavatore KUBOTA 18 +mar", type: "Escavatore", plate: "e.07", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 13, name: "Escavatore CAT 30.8", type: "Escavatore", plate: "e.08", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 14, name: "Escavatore CAT 30.8 +mar", type: "Escavatore", plate: "e.09", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 15, name: "Escavatore MINIPALA", type: "Escavatore", plate: "e.10", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 16, name: "Escavatore RULLO", type: "Escavatore", plate: "e.11", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 17, name: "FURGONE", type: "Vari", plate: "v.01", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 18, name: "MERLO", type: "Vari", plate: "v.02", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 19, name: "MULETTO", type: "Vari", plate: "v.03", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 20, name: "TRATTORE + TRINCIA", type: "Vari", plate: "v.04", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 21, name: "GENERATORE 3 KW", type: "Vari", plate: "v.05", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() },
+                { id: 22, name: "GENERATORE 30 KW", type: "Vari", plate: "v.06", active: true, dailyHours: 8, notes: "", createdAt: new Date().toISOString() }
+            ],
+            
+            // Subappaltatori predefiniti
+            subcontractors: [
+                { id: 1, name: "EdilCostruzioni S.r.l.", piva: "12345678901", specialty: "Costruzioni civili", active: true, createdAt: new Date().toISOString() },
+                { id: 2, name: "IdroService S.n.c.", piva: "23456789012", specialty: "Impianti idraulici", active: true, createdAt: new Date().toISOString() },
+                { id: 3, name: "ElettroImpianti S.r.l.", piva: "34567890123", specialty: "Impianti elettrici", active: true, createdAt: new Date().toISOString() }
+            ],
+            
+            // Cantieri predefiniti
+            sites: [
+                { id: 1, name: "Cantiere Via Roma", address: "Via Roma, 123", city: "Roma", active: true, createdAt: new Date().toISOString() },
+                { id: 2, name: "Cantiere Piazza Garibaldi", address: "Piazza Garibaldi, 45", city: "Milano", active: true, createdAt: new Date().toISOString() },
+                { id: 3, name: "Cantiere Centro Commerciale", address: "Viale Europa, 78", city: "Torino", active: true, createdAt: new Date().toISOString() }
+            ],
+            
+            // Categorie lavori basate sui tuoi template
+            workCategories: [
+                { 
+                    id: 1, 
+                    name: "Lavorazioni preliminari", 
+                    icon: "📋", 
+                    color: "#4facfe",
+                    subcategories: ["Rilievi", "Scavi", "Demolizioni", "Provvisionali"],
+                    active: true 
+                },
+                { 
+                    id: 2, 
+                    name: "Strutture", 
+                    icon: "🏛️", 
+                    color: "#667eea",
+                    subcategories: ["Fondazioni", "Strutture elevate", "Murature", "Cemento armato", "Strutture metalliche"],
+                    active: true 
+                },
+                { 
+                    id: 3, 
+                    name: "Opere murarie e finiture grezze", 
+                    icon: "🧱", 
+                    color: "#fa709a",
+                    subcategories: ["Tramezzi", "Intonaci", "Massetti", "Cartongesso"],
+                    active: true 
+                },
+                { 
+                    id: 4, 
+                    name: "Serramenti e chiusure", 
+                    icon: "🚪", 
+                    color: "#ffd166",
+                    subcategories: ["Infissi esterni", "Porte interne", "Portoni", "Persiane"],
+                    active: true 
+                },
+                { 
+                    id: 5, 
+                    name: "Impianti", 
+                    icon: "⚡", 
+                    color: "#43e97b",
+                    subcategories: ["Elettrico", "Idraulico", "Riscaldamento", "Gas", "Telecomunicazioni"],
+                    active: true 
+                },
+                { 
+                    id: 6, 
+                    name: "Finiture", 
+                    icon: "🎨", 
+                    color: "#ff9a9e",
+                    subcategories: ["Pavimentazioni", "Rivestimenti", "Tinteggiature", "Decorazioni", "Sistemazioni esterne", "Urbanizzazione"],
+                    active: true 
+                }
+            ],
+            
+            // Template lavori basati sui tuoi dati (29 template)
+            workTemplates: [
+                { 
+                    id: 1, 
+                    name: "Rilievi topografici e tracciamenti", 
+                    categoryId: 1, 
+                    categoryName: "Lavorazioni preliminari",
+                    subcategory: "Rilievi",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Rilievi topografici e tracciamenti",
+                    active: true 
+                },
+                { 
+                    id: 2, 
+                    name: "Scavi e sbancamenti per fondazioni", 
+                    categoryId: 1, 
+                    categoryName: "Lavorazioni preliminari",
+                    subcategory: "Scavi",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Scavi e sbancamenti per fondazioni",
+                    active: true 
+                },
+                { 
+                    id: 3, 
+                    name: "Demolizioni di strutture esistenti", 
+                    categoryId: 1, 
+                    categoryName: "Lavorazioni preliminari",
+                    subcategory: "Demolizioni",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Demolizioni di strutture esistenti",
+                    active: true 
+                },
+                { 
+                    id: 4, 
+                    name: "Opere provvisionali", 
+                    categoryId: 1, 
+                    categoryName: "Lavorazioni preliminari",
+                    subcategory: "Provvisionali",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Opere provvisionali (recinzioni, ponteggi, baraccamenti di cantiere)",
+                    active: true 
+                },
+                { 
+                    id: 5, 
+                    name: "Fondazioni", 
+                    categoryId: 2, 
+                    categoryName: "Strutture",
+                    subcategory: "Fondazioni",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Fondazioni (plinti, travi rovesce, platee)",
+                    active: true 
+                },
+                { 
+                    id: 6, 
+                    name: "Strutture in elevazione", 
+                    categoryId: 2, 
+                    categoryName: "Strutture",
+                    subcategory: "Strutture elevate",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Strutture in elevazione (pilastri, travi, solai)",
+                    active: true 
+                },
+                { 
+                    id: 7, 
+                    name: "Murature portanti e di tamponamento", 
+                    categoryId: 2, 
+                    categoryName: "Strutture",
+                    subcategory: "Murature",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Murature portanti e di tamponamento",
+                    active: true 
+                },
+                { 
+                    id: 8, 
+                    name: "Opere in cemento armato", 
+                    categoryId: 2, 
+                    categoryName: "Strutture",
+                    subcategory: "Cemento armato",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Opere in cemento armato gettato in opera o prefabbricato",
+                    active: true 
+                },
+                { 
+                    id: 9, 
+                    name: "Strutture metalliche e in legno", 
+                    categoryId: 2, 
+                    categoryName: "Strutture",
+                    subcategory: "Strutture metalliche",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Strutture metalliche e in legno",
+                    active: true 
+                },
+                { 
+                    id: 10, 
+                    name: "Tramezzi interni", 
+                    categoryId: 3, 
+                    categoryName: "Opere murarie e finiture grezze",
+                    subcategory: "Tramezzi",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Tramezzi interni",
+                    active: true 
+                },
+                { 
+                    id: 11, 
+                    name: "Intonaci interni ed esterni", 
+                    categoryId: 3, 
+                    categoryName: "Opere murarie e finiture grezze",
+                    subcategory: "Intonaci",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Intonaci interni ed esterni",
+                    active: true 
+                },
+                { 
+                    id: 12, 
+                    name: "Massetti di sottofondo", 
+                    categoryId: 3, 
+                    categoryName: "Opere murarie e finiture grezze",
+                    subcategory: "Massetti",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Massetti di sottofondo",
+                    active: true 
+                },
+                { 
+                    id: 13, 
+                    name: "Controsoffitti e pareti in cartongesso", 
+                    categoryId: 3, 
+                    categoryName: "Opere murarie e finiture grezze",
+                    subcategory: "Cartongesso",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Controsoffitti e pareti in cartongesso",
+                    active: true 
+                },
+                { 
+                    id: 14, 
+                    name: "Infissi esterni", 
+                    categoryId: 4, 
+                    categoryName: "Serramenti e chiusure",
+                    subcategory: "Infissi esterni",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Infissi esterni (porte, finestre, vetrate)",
+                    active: true 
+                },
+                { 
+                    id: 15, 
+                    name: "Porte interne", 
+                    categoryId: 4, 
+                    categoryName: "Serramenti e chiusure",
+                    subcategory: "Porte interne",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Porte interne",
+                    active: true 
+                },
+                { 
+                    id: 16, 
+                    name: "Portoni e cancelli", 
+                    categoryId: 4, 
+                    categoryName: "Serramenti e chiusure",
+                    subcategory: "Portoni",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Portoni e cancelli",
+                    active: true 
+                },
+                { 
+                    id: 17, 
+                    name: "Persiane, tapparelle, grate", 
+                    categoryId: 4, 
+                    categoryName: "Serramenti e chiusure",
+                    subcategory: "Persiane",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Persiane, tapparelle, grate",
+                    active: true 
+                },
+                { 
+                    id: 18, 
+                    name: "Impianto elettrico", 
+                    categoryId: 5, 
+                    categoryName: "Impianti",
+                    subcategory: "Elettrico",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Impianto elettrico",
+                    active: true 
+                },
+                { 
+                    id: 19, 
+                    name: "Impianto idrico-sanitario", 
+                    categoryId: 5, 
+                    categoryName: "Impianti",
+                    subcategory: "Idraulico",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Impianto idrico-sanitario",
+                    active: true 
+                },
+                { 
+                    id: 20, 
+                    name: "Impianto di riscaldamento e climatizzazione", 
+                    categoryId: 5, 
+                    categoryName: "Impianti",
+                    subcategory: "Riscaldamento",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Impianto di riscaldamento e climatizzazione",
+                    active: true 
+                },
+                { 
+                    id: 21, 
+                    name: "Impianto gas", 
+                    categoryId: 5, 
+                    categoryName: "Impianti",
+                    subcategory: "Gas",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Impianto gas",
+                    active: true 
+                },
+                { 
+                    id: 22, 
+                    name: "Impianto telefonico, dati e domotica", 
+                    categoryId: 5, 
+                    categoryName: "Impianti",
+                    subcategory: "Telecomunicazioni",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Impianto telefonico, dati e domotica",
+                    active: true 
+                },
+                { 
+                    id: 23, 
+                    name: "Pavimentazioni", 
+                    categoryId: 6, 
+                    categoryName: "Finiture",
+                    subcategory: "Pavimentazioni",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Pavimentazioni (piastrelle, parquet, resine, moquette)",
+                    active: true 
+                },
+                { 
+                    id: 24, 
+                    name: "Rivestimenti", 
+                    categoryId: 6, 
+                    categoryName: "Finiture",
+                    subcategory: "Rivestimenti",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Rivestimenti (ceramica, pietra, legno)",
+                    active: true 
+                },
+                { 
+                    id: 25, 
+                    name: "Tinteggiature e verniciature", 
+                    categoryId: 6, 
+                    categoryName: "Finiture",
+                    subcategory: "Tinteggiature",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Tinteggiature e verniciature",
+                    active: true 
+                },
+                { 
+                    id: 26, 
+                    name: "Decorazioni e finiture speciali", 
+                    categoryId: 6, 
+                    categoryName: "Finiture",
+                    subcategory: "Decorazioni",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Decorazioni e finiture speciali",
+                    active: true 
+                },
+                { 
+                    id: 27, 
+                    name: "Sistemazioni esterne", 
+                    categoryId: 6, 
+                    categoryName: "Finiture",
+                    subcategory: "Sistemazioni esterne",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Sistemazioni esterne (marciapiedi, cortili, giardini)",
+                    active: true 
+                },
+                { 
+                    id: 28, 
+                    name: "Recinzioni e cancellate", 
+                    categoryId: 6, 
+                    categoryName: "Finiture",
+                    subcategory: "Recinzioni",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Recinzioni e cancellate",
+                    active: true 
+                },
+                { 
+                    id: 29, 
+                    name: "Opere di urbanizzazione", 
+                    categoryId: 6, 
+                    categoryName: "Finiture",
+                    subcategory: "Urbanizzazione",
+                    unit: "ore", 
+                    typicalQuantity: 1,
+                    typicalHours: 8,
+                    typicalCost: 0,
+                    description: "Opere di urbanizzazione (strade, fognature, illuminazione)",
+                    active: true 
+                }
+            ],
             
             // Bozze
             drafts: [],
@@ -1805,124 +2309,11 @@
             if (savedData) {
                 const data = JSON.parse(savedData);
                 systemData = { ...systemData, ...data };
-            } else {
-                // Dati predefiniti
-                setupDefaultData();
             }
             
             // Aggiorna UI
             updateSelects();
             updateLists();
-        }
-        
-        function setupDefaultData() {
-            // Operai predefiniti
-            systemData.workers = [
-                { id: 1, name: "Mario Rossi", code: "OP001", specialty: "Capocantiere", active: true, createdAt: new Date().toISOString() },
-                { id: 2, name: "Luigi Verdi", code: "OP002", specialty: "Carpentiere", active: true, createdAt: new Date().toISOString() },
-                { id: 3, name: "Giovanni Bianchi", code: "OP003", specialty: "Muratore", active: true, createdAt: new Date().toISOString() },
-                { id: 4, name: "Paolo Neri", code: "OP004", specialty: "Elettricista", active: true, createdAt: new Date().toISOString() },
-                { id: 5, name: "Antonio Gialli", code: "OP005", specialty: "Idraulico", active: true, createdAt: new Date().toISOString() }
-            ];
-            
-            // Mezzi predefiniti
-            systemData.equipment = [
-                { id: 1, name: "Escavatore CAT 320", type: "escavatore", plate: "AA123BB", active: true, createdAt: new Date().toISOString() },
-                { id: 2, name: "Ruspa Komatsu", type: "ruspa", plate: "BB456CC", active: true, createdAt: new Date().toISOString() },
-                { id: 3, name: "Gru Liebherr", type: "gru", plate: "CC789DD", active: true, createdAt: new Date().toISOString() },
-                { id: 4, name: "Betoniera", type: "betoniera", plate: "DD012EE", active: true, createdAt: new Date().toISOString() },
-                { id: 5, name: "Autocarro Iveco", type: "autocarro", plate: "EE345FF", active: true, createdAt: new Date().toISOString() }
-            ];
-            
-            // Subappaltatori predefiniti
-            systemData.subcontractors = [
-                { id: 1, name: "EdilCostruzioni S.r.l.", piva: "12345678901", specialty: "Costruzioni civili", active: true, createdAt: new Date().toISOString() },
-                { id: 2, name: "IdroService S.n.c.", piva: "23456789012", specialty: "Impianti idraulici", active: true, createdAt: new Date().toISOString() },
-                { id: 3, name: "ElettroImpianti S.r.l.", piva: "34567890123", specialty: "Impianti elettrici", active: true, createdAt: new Date().toISOString() }
-            ];
-            
-            // Cantieri predefiniti
-            systemData.sites = [
-                { id: 1, name: "Cantiere Via Roma", address: "Via Roma, 123", city: "Roma", active: true, createdAt: new Date().toISOString() },
-                { id: 2, name: "Cantiere Piazza Garibaldi", address: "Piazza Garibaldi, 45", city: "Milano", active: true, createdAt: new Date().toISOString() },
-                { id: 3, name: "Cantiere Centro Commerciale", address: "Viale Europa, 78", city: "Torino", active: true, createdAt: new Date().toISOString() }
-            ];
-            
-            // Categorie lavori predefinite
-            systemData.workCategories = [
-                { 
-                    id: 1, 
-                    name: "Scavi e Fondazioni", 
-                    icon: "⛏️", 
-                    color: "#4facfe",
-                    subcategories: ["Scavo meccanico", "Scavo manuale", "Fondazioni", "Platee", "Pali"],
-                    active: true 
-                },
-                { 
-                    id: 2, 
-                    name: "Strutture in Cemento", 
-                    icon: "🏗️", 
-                    color: "#667eea",
-                    subcategories: ["Carpenterie", "Getti", "Finiture", "Pavimenti", "Travi", "Pilastri"],
-                    active: true 
-                },
-                { 
-                    id: 3, 
-                    name: "Murature", 
-                    icon: "🧱", 
-                    color: "#fa709a",
-                    subcategories: ["Muratura portante", "Tramezzi", "Intonaci", "Rasature", "Isolamenti"],
-                    active: true 
-                },
-                { 
-                    id: 4, 
-                    name: "Impianti", 
-                    icon: "🔌", 
-                    color: "#43e97b",
-                    subcategories: ["Elettrico", "Idraulico", "Termico", "Climatizzazione", "Antincendio"],
-                    active: true 
-                },
-                { 
-                    id: 5, 
-                    name: "Finitura Interna", 
-                    icon: "🎨", 
-                    color: "#ff9a9e",
-                    subcategories: ["Pavimenti", "Rivestimenti", "Cartongesso", "Pittura", "Infissi"],
-                    active: true 
-                }
-            ];
-            
-            // Template predefiniti
-            systemData.workTemplates = [
-                { 
-                    id: 1, 
-                    name: "Scavo meccanico fondazioni", 
-                    categoryId: 1, 
-                    categoryName: "Scavi e Fondazioni",
-                    subcategory: "Scavo meccanico",
-                    unit: "m3", 
-                    typicalQuantity: 50,
-                    typicalHours: 4,
-                    typicalCost: 25,
-                    description: "Scavo per fondazioni con escavatore",
-                    active: true 
-                },
-                { 
-                    id: 2, 
-                    name: "Getto calcestruzzo platea", 
-                    categoryId: 2, 
-                    categoryName: "Strutture in Cemento",
-                    subcategory: "Getti",
-                    unit: "m3", 
-                    typicalQuantity: 30,
-                    typicalHours: 8,
-                    typicalCost: 120,
-                    description: "Getto platea in calcestruzzo C25/30",
-                    active: true 
-                }
-            ];
-            
-            saveAllData();
         }
         
         // NAVIGAZIONE
@@ -2674,8 +3065,8 @@
                     <td>${eq.type}</td>
                     <td>${eq.plate || '-'}</td>
                     <td>
-                        <span class="status-badge status-completed">
-                            ${eq.active ? 'Attivo' : 'Inattivo'}
+                        <span class="status-badge ${eq.active ? 'status-completed' : 'status-draft'}">
+                            ${eq.active ? 'Attivo' : 'In manutenzione'}
                         </span>
                     </td>
                     <td>${formatDate(eq.createdAt)}</td>
