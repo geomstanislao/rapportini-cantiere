@@ -21,6 +21,8 @@ Una chat (o un topic) per gara. Gli agenti fanno domande, tu rispondi con un bot
 Comandi: `/gare` elenca le gare e le domande in attesa.
 
 ## Due PC (lavoro + portatile) con Google Drive
+- Consigliato: metti l intera cartella `telegram-bot` su Drive (es. `_MASTER\telegram-bot`). Coda e gare.json stanno nella cartella e si sincronizzano da soli, senza `BOT_QUEUE` e `GARE_FILE`.
+- In alternativa:
 - Crea su Drive la cartella `gare-bot` e imposta **"Mirror files"** (sempre offline) in Google Drive per desktop.
 - In `.env` di **ogni** PC: `BOT_QUEUE=<percorso>\gare-bot\queue` e `GARE_FILE=<percorso>\gare-bot\gare.json`.
 - Avvia `bot.py` **solo sul PC lavoro**. Sul portatile gli agenti usano solo `ask.py`.
