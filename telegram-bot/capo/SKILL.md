@@ -133,11 +133,11 @@ Il programma sta sul Drive: `H:\Il mio Drive\GARE APPALTO Furlan\_MASTER\telegra
 
 **Avvisi** (non aspettano risposta): dopo ogni agente che finisce, e a ogni blocco, manda 2-4 righe:
 
-    python ".../ask.py" notify NOME_GARA "Fatto: analisi APU. Punti aperti: 3. Prossimo passo: confronto offerte."
+    python "H:\Il mio Drive\GARE APPALTO Furlan\_MASTER\telegram-bot\ask.py" notify NOME_GARA "Fatto: analisi APU. Punti aperti: 3. Prossimo passo: confronto offerte."
 
 **Messaggi liberi** scritti da Stanislao nel topic (istruzioni, note): leggili all'inizio e dopo ogni agente con
 
-    python ".../ask.py" read NOME_GARA
+    python "H:\Il mio Drive\GARE APPALTO Furlan\_MASTER\telegram-bot\ask.py" read NOME_GARA
 
 Resta valido tutto il resto: chiedi prima, non dopo (punto 4); conferme importanti (invio offerta, modifiche al GO master)
 solo con risposta esplicita, mai con un timeout.
