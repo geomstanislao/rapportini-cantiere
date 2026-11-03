@@ -19,3 +19,9 @@ Una chat (o un topic) per gara. Gli agenti fanno domande, tu rispondi con un bot
 (o a quella a cui rispondi con "reply"). Vocali: serve `OPENAI_API_KEY` per la trascrizione.
 
 Comandi: `/gare` elenca le gare e le domande in attesa.
+
+## Due PC (lavoro + portatile) con Google Drive
+- Crea su Drive la cartella `gare-bot` e imposta **"Mirror files"** (sempre offline) in Google Drive per desktop.
+- In `.env` di **ogni** PC: `BOT_QUEUE=<percorso>\gare-bot\queue` e `GARE_FILE=<percorso>\gare-bot\gare.json`.
+- Avvia `bot.py` **solo sul PC lavoro**. Sul portatile gli agenti usano solo `ask.py`.
+- Telegram accetta una sola istanza del bot: non avviarlo su entrambi.

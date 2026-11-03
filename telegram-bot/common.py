@@ -2,9 +2,6 @@ import json, os
 from pathlib import Path
 
 BASE = Path(__file__).parent
-QUEUE = Path(os.environ.get("BOT_QUEUE", BASE / "queue"))
-for d in ("inbox", "sent", "answers", "messages"):
-    (QUEUE / d).mkdir(parents=True, exist_ok=True)
 
 
 def load_env():
@@ -16,13 +13,23 @@ def load_env():
                 os.environ.setdefault(k.strip(), v.strip())
 
 
+load_env()
+QUEUE = Path(os.environ.get("BOT_QUEUE", BASE / "queue"))
+for d in ("inbox", "sent", "answers", "messages"):
+    (QUEUE / d).mkdir(parents=True, exist_ok=True)
+
+
+def gare_file():
+    return Path(os.environ.get("GARE_FILE", BASE / "gare.json"))
+
+
 def load_gare():
-    f = BASE / "gare.json"
+    f = gare_file()
     return json.loads(f.read_text())["gare"] if f.exists() else {}
 
 
 def save_gare(gare):
-    (BASE / "gare.json").write_text(json.dumps({"gare": gare}, indent=2, ensure_ascii=False))
+    gare_file().write_text(json.dumps({"gare": gare}, indent=2, ensure_ascii=False))
 
 
 def write_json(path: Path, data):
